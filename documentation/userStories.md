@@ -17,4 +17,4 @@
 
 ## bonus
 - As a user of the site, I want to be able to update my profile picture
-- As a user of the site, I want a theme to be dispayed depending on which role I assined to 
+- As a user of the site, I want a theme to be dispayed depending on which role I'm assigned to 

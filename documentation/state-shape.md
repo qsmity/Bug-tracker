@@ -2,11 +2,11 @@
  ``` javascript store = {
 entities: {
     employees: 
-            {id, name, email, role}
+            [id]: {id, name, email, role}
     projects: 
-            {id, name, description, comments: [array of comments]}
+           [id]:  {id, name, description, comments: [array of comments]}
     tickets: 
-            {id, name, description, severityLevel, status, type}
+            [id]: {id, name, description, severityLevel, status, type}
                 }
 applicationErrors: 
             [array of errors]
