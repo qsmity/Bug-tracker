@@ -19,14 +19,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Project.associate = function(models) {
     const columnMapping = {
-      through: Employeeproject,
-      foreignKey: projectId,
+      through: "EmployeeProject",
+      foreignKey: "projectId",
       // as: "project",
-      otherKey: employeeId,
+      otherKey: "employeeId",
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     }
-    Project.belongToMany(models.Employee, columnMapping)
+    Project.belongsToMany(models.Employee, columnMapping)
     Project.hasMany(models.Ticket, {foreignKey: "projectId", onDelete: "CASCADE"})
   };
   return Project;

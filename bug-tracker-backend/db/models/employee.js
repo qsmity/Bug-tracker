@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Employee = sequelize.define('Employee', {
@@ -11,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     roleId: {
-      allowNull: false,
       type: DataTypes.INTEGER
     },
     hashedPassword: {
@@ -21,17 +21,23 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Employee.associate = function(models) {
     const columnMapping = {
-      through: Employeeproject,
-      foreignKey: employeeId,
+      through: "EmployeeProject",
+      foreignKey: "employeeId",
       // as: "employee",
-      otherKey: projectId,
+      otherKey: "projectId",
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     }
 
-    Employee.hasMany(models.Project, columnMapping),
-    Employee.belongTo(models.Role, {foreignKey: "roleId", onDelete: "CASCADE"})
+    Employee.belongsToMany(models.Project, columnMapping),
+    Employee.belongsTo(models.Role, {foreignKey: "roleId", onDelete: "CASCADE"})
     Employee.hasMany(models.Ticket, {foreignKey: "employeeId", onDelete: "CASCADE"})
   };
+
+  Employee.prototype.validatePassword = function (password) {
+    // because this is a model instance method, `this` is the user instance here:
+    return bcrypt.compareSync(password, this.hashedPassword.toString());
+  };
+
   return Employee;
 };

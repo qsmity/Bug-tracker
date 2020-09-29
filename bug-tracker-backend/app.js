@@ -1,10 +1,29 @@
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
+const cors = require('cors')
+const { environment } = require('./config/index')
+const { ValidationError } = require("sequelize");
 // const routes = require('./routes')
 
 //external imports 
-app.use(morgan('dev'))
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}))
+app.use(cors({ origin: "http://localhost:3000" }));
+
+
+//api
+const usersRouter  = require('./routes/users')
+const sessionRouter = require('./routes/session')
+const projectsRouter = require('./routes/projects')
+const ticketsRouter = require('./routes/tickets')
+
+//api mounted routes
+app.use('/users', usersRouter)
+app.use('/session', sessionRouter)
+app.use('/projects', projectsRouter)
+app.use('/tickets', ticketsRouter)
 
 app.get('/', (req, res) => {
     res.send('all set up')
