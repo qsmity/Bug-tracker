@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const { environment } = require('./config/index')
 const { ValidationError } = require("sequelize");
+const cookieParser = require('cookie-parser')
 // const routes = require('./routes')
 
 //external imports 
@@ -11,12 +12,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cookieParser())
 
 
 //api
 const usersRouter  = require('./routes/users')
 const sessionRouter = require('./routes/session')
-const projectsRouter = require('./routes/projects')
+const { projectsRouter } = require('./routes/projects')
 const ticketsRouter = require('./routes/tickets')
 
 //api mounted routes
@@ -29,6 +31,13 @@ app.get('/', (req, res) => {
     res.send('all set up')
 })
 
+// 'create:any': ['*'],
+// 'read:any': ['*'],
+// 'update:any': ['*', '!views'],
+// 'delete:any': ['*']
+//setting up access control permisssions
+
+// console.log(ac.getGrants())
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {

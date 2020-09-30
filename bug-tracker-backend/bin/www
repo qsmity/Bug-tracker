@@ -1,7 +1,7 @@
 #!/usr/bin/env node 
 const { port } = require('../config/index')
 
-const app = require('../app.js')
+const app  = require('../app.js')
 const db = require('../db/models')
 
 db.sequelize.authenticate()

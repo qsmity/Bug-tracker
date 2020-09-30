@@ -2,9 +2,11 @@ const express = require('express')
 const { Employee } = require('../db/models')
 const { asyncHandler, handleValidationErrors } = require('./utils')
 const bcrypt = require('bcryptjs')
-const { Error } = require('sequelize')
 const { requireAuth, getUserToken} = require('../auth')
 const { check } = require('express-validator')
+const AcessControl = require('accesscontrol')
+const { grantsObject, ac } = require('./projects')
+
 
 const router = express.Router()
 const userNotFoundError = (id) => {
@@ -27,17 +29,28 @@ const validateEmailAndPassword = [
   ];
 
 //get all users in db for admin role
-router.get('/', 
-    validateEmailAndPassword,
-    asyncHandler(async (req, res) => {
+router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
+    const role = req.user.role
 
-    const users = await Employee.findAll()
-    if (users) {
-        res.status(200)
-        res.json({ users })
+    const permissionAdmin = ac.can(`${role}`).readAny('employees')
+    console.log(permissionAdmin.granted)
+
+    if(permissionAdmin.granted){
+        const users = await Employee.findAll()
+        if (users) {
+            res.status(200)
+            res.json({ users })
+        } else {
+    
+            res.status(404).send('resource not found')
+        }
+
     } else {
-
-        res.status(404).send('resource not found')
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to access resource']
+        next(err)
     }
 
 }))
@@ -47,7 +60,7 @@ router.post('/', asyncHandler( async ( req, res ) => {
     const { name , email, password } = req.body
     // console.log(name, email, password)
 
-    const hashedPassword = bycrypt.hashSync(password)
+    const hashedPassword = bcrypt.hashSync(password)
     const employee = await Employee.create({ name, email, hashedPassword })
 
     //make a jwt token and set it in the cookie so the user can be logged in
@@ -58,28 +71,49 @@ router.post('/', asyncHandler( async ( req, res ) => {
     res.json({ employee })
 }))
 
-//update user role in db
-router.put('/:employeeId', asyncHandler( async ( req, res, next ) => {
-    //this will be sent when the admin clicks on the user to update the role with
+//update user role in db (admin role only)
+router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) => {
+    //employeeId will be sent when the admin clicks on the user to update the role with
     const employeeId = req.params.employeeId
 
-    //the req should automatically send the already created user info to update
-    const { name , email, hashedPassword } = req.body
-    //will set up roleId functionality later
-    const roleId = 3
-    // console.log(name, email, password)
-    const employee = await Employee.findByPk(employeeId)
-    console.log(employee)
+    const role = req.user.role
+    console.log(role)
+    //admin role which returns a boolean if permission granted
+    const permissionAdmin = ac.can(`${role}`).updateAny('employees')
+    console.log(permissionAdmin.granted)
 
-    // const hashedPassword = bycrypt.hashSync(password)
-    //password should already by hashed, just updating 
-    if(employee){
-        const updatedEmployee = await employee.update({ name, email, hashedPassword, roleId })
-        res.json({ updatedEmployee })
+    if(permissionAdmin.granted){
+        //the req should automatically send the already created user info to update
+        // const { name , email, hashedPassword } = req.body
+    
+        //testing purposes for postman
+        const { name , email, password} = req.body
+        const hashedPassword = bcrypt.hashSync(password)
+    
+        //will set up roleId functionality later
+        const roleId = 3
+
+        // console.log(name, email, password)
+
+        const employee = await Employee.findByPk(employeeId)
+        // console.log(employee)
+        
+    
+        //password should already be hashed, just updating 
+        if(employee){
+            const updatedEmployee = await employee.update({ name, email, hashedPassword, roleId })
+            res.json({ updatedEmployee })
+        } else {
+            next(userNotFoundError(employeeId))
+        }
     } else {
-        next(userNotFoundError(userId))
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to update resource']
+        next(err)
     }
-    // res.status(201)
+
 }))
 
 

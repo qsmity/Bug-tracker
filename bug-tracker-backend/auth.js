@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { jwtConfig } = require("./config");
-const { User } = require("./db/models");
+const { Employee } = require("./db/models");
 
 const { secret, expiresIn } = jwtConfig;
 
@@ -25,6 +25,7 @@ const getUserToken = (user) => {
 const restoreUser = (req, res, next) => {
   // token being parsed from request's cookies by the cookie-parser middleware
   // function in app.js:
+  console.log(req.cookies)
   const { token } = req.cookies;
 
   if (!token) {
@@ -41,7 +42,9 @@ const restoreUser = (req, res, next) => {
     const { id } = jwtPayload.data;
 
     try {
-      req.user = await User.findByPk(id);
+      const employee = await Employee.findByPk(id);
+      req.user = employee
+      req.user.role = employee.roleId
     } catch (e) {
       // remove the token cookie
       res.clearCookie("token");

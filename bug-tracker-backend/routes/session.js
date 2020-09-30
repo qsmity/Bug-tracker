@@ -2,10 +2,8 @@ const express = require('express')
 const { Employee } = require('../db/models')
 const { asyncHandler, handleValidationErrors } = require('./utils')
 const bcrypt = require('bcryptjs')
-const { Error } = require('sequelize')
 const { requireAuth, getUserToken} = require('../auth')
 const { check } = require('express-validator')
-
 const router = express.Router()
 
 const validateEmailAndPassword = [
