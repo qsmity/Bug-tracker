@@ -10,6 +10,7 @@ const getUserToken = (user) => {
   const userDataForToken = {
     id: user.id,
     email: user.email,
+    role: user.roleId
   };
 
   // Create the token.

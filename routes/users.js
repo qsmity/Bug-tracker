@@ -1,5 +1,5 @@
 const express = require('express')
-const { Employee } = require('../db/models')
+const { Employee, Project } = require('../db/models')
 const { asyncHandler, handleValidationErrors } = require('./utils')
 const bcrypt = require('bcryptjs')
 const { requireAuth, getUserToken} = require('../auth')
@@ -27,6 +27,15 @@ const validateEmailAndPassword = [
       .withMessage("Please provide a password."),
     handleValidationErrors,
   ];
+  router.get('/:employeeId', asyncHandler( async (req, res, next) => {
+    const employeeId = req.params.employeeId
+    const employee = await Employee.findOne({
+        where: {
+            id: employeeId
+        }
+    })
+    res.json({ employee })
+  }))
 
 //get all users in db for admin role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
@@ -36,10 +45,12 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     console.log(permissionAdmin.granted)
 
     if(permissionAdmin.granted){
-        const users = await Employee.findAll()
-        if (users) {
+        const employees = await Employee.findAll({
+            include: [Project]
+        })
+        if (employees) {
             res.status(200)
-            res.json({ users })
+            res.json({ employees })
         } else {
     
             res.status(404).send('resource not found')
