@@ -1,6 +1,9 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import * as employeeAction from '../actions/employeeAction'
 
 const EmployeeTable = ({ employeesArray }) => {
+    const dispatch = useDispatch()
     const mapRoleIdToName = (roleId) => {
         switch (roleId) {
             case 1:
@@ -17,12 +20,20 @@ const EmployeeTable = ({ employeesArray }) => {
         }
     }
 
+    const deleteEmployee = (e) => {
+        if (window.confirm('Are you sure you wish to delete this item?')){
+            dispatch(employeeAction.deleteEmployee(e.target.id))
+        }
+        return
+    }
+
     return (
         <table>
             <thead>
                 <tr>
                     <th>Employee</th>
                     <th>Role</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,9 +41,9 @@ const EmployeeTable = ({ employeesArray }) => {
                     return <tr key={employee.id}>
                         <td>
                             {employee.name}
-                            <button>Delete</button>
                         </td>
                         <td>{mapRoleIdToName(employee.roleId)}</td>
+                        <td><button id={employee.id} onClick={deleteEmployee}>Delete</button></td>
                     </tr>
                 }
                 )}

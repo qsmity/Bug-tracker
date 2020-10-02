@@ -28,10 +28,10 @@ const AuthRoute = ({ component: Component, token, ...rest }) => {
 function App({token}) {
   return (
     <div>
-      <h1>bug_tracker_app</h1>
+      <h1>Trackerfy</h1>
       <nav>
         <NavLink to='/login' >Login</NavLink>
-        <NavLink to='/signup' >SignUp</NavLink>
+        <NavLink to='/signup' >Sign Up</NavLink>
         <NavLink to='/admin/dashboard' >Dashboard</NavLink>
       </nav>
       <Switch>

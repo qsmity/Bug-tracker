@@ -3,7 +3,8 @@
 ### users
 - `GET /users` - returns all employees in db (admin role) with roles if they are assigned
 - `POST /users` - sign up employee with unassined role
-- `PUT /users/:employeeId` - update employee role in db(admin role)
+- `PUT /users/:employeeId` - update employee role in db (admin role)
+- `DELETE /users/:employeeId` - delete employee in db (admin role)
 
 ### session
 - `POST /session` log in employee
