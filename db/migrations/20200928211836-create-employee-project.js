@@ -11,13 +11,15 @@ module.exports = {
       employeeId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: "Employees"}
+        references: {model: "Employees"},
+        onDelete: 'CASCADE'
 
       },
       projectId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: "Projects"}
+        references: {model: "Projects"},
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

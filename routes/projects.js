@@ -88,7 +88,9 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         //get all projects if admin role
         let projects;
         if (permissionAdminSubmitter.granted) {
-            projects = await Project.findAll()
+            projects = await Project.findAll({
+                include: [Employee]
+            })
 
             //only get projects assigned to (dev, projectManager)
         } else {

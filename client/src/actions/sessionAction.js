@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { removeEmployees } from './employeeAction'
+import { removeProjects } from './projectAction'
 export const LOAD_SESSION = 'LOAD_SESSION'   
 export const REMOVE_SESSION = 'REMOVE_SESSION' 
 
@@ -30,7 +31,7 @@ export const login = ( email, password ) => async (dispatch) => {
     
     //make a fetch call to db to login user
     try{
-        const res = await fetch('/session', {
+        const res = await fetch('/api/session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,6 +57,7 @@ export const logout = () => (dispatch) => {
     Cookies.remove('token')
     dispatch(removeSession())
     dispatch(removeEmployees())
+    dispatch(removeProjects())
 } 
 
 export const signup = ( name, email, password ) => async (dispatch) => {
@@ -72,13 +74,16 @@ export const signup = ( name, email, password ) => async (dispatch) => {
     
     //make a fetch call to db to login user
     try{
-        const res = await fetch('/users', {
+        const res = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         })
+        if(!res.ok){
+            throw res
+        }
         
         //grab current token
         const token = Cookies.get('token')

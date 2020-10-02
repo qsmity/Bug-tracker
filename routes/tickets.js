@@ -43,6 +43,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         }
     } else {
         //build functionality for if role is not defined (new user)
+        res.status(401)
         const err = new Error('permission denied')
         err.title = 'permission denied'
         err.status = 401

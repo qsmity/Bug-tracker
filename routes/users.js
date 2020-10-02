@@ -40,7 +40,14 @@ const validateEmailAndPassword = [
 //get all users in db for admin role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     const role = req.user.role
-
+    if(!role){
+        res.status(401)
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['no role defined']
+       return next(err)
+    }
     const permissionAdmin = ac.can(`${role}`).readAny('employees')
     console.log(permissionAdmin.granted)
 
@@ -130,7 +137,7 @@ router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) =
 router.delete('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
     const employeeId = parseInt(req.params.employeeId,10)
-
+    console.log('employeeId',employeeId)
     //grabbing role from req to verify permissions (admin)
     const role = req.user.role
 

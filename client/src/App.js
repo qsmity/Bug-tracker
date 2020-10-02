@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, NavLink, Route, Redirect } from 'react-router-dom'
 import LoginForm from './session/LoginForm'
-import AdminDashboard from './components/AdminDashboard'
+import Dashboard from './components/Dashboard'
 import { useSelector } from 'react-redux';
 import SignupForm from './session/SignupForm';
 
@@ -35,7 +35,7 @@ function App({token}) {
         <NavLink to='/admin/dashboard' >Dashboard</NavLink>
       </nav>
       <Switch>
-        <ProtectedRoute token={token} exact path='/admin/dashboard' component={AdminDashboard} />
+        <ProtectedRoute token={token} exact path='/admin/dashboard' component={Dashboard} />
         <AuthRoute exact token={token} path='/login' component={LoginForm} />
         <AuthRoute token={token} path='/signup' component={SignupForm}/>
       </Switch>

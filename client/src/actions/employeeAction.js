@@ -22,11 +22,17 @@ export const removeOneEmployee = (employeeId) => ({
 //thunk
 export const getEmployees = () => async (dispatch) => {
     try {
-        const res = await fetch('/users')
+        const res = await fetch('/api/users')
 
         //logged in user
         const { employees } = await res.json()
-        dispatch(loadEmployees(employees))
+        if(!res.ok){    
+            throw res
+        }
+        if(employees){
+            dispatch(loadEmployees(employees))
+        }
+        return
     } catch (err) {
         console.log(err)
         //enventually will push into errors array in store
@@ -38,7 +44,7 @@ export const updateEmployeeRole = (employeeId, roleId) => async (dispatch) => {
     const parsedEmployeeId = parseInt(employeeId, 10)
     try {
         const body = { roleId }
-        const res = await fetch(`/users/${parsedEmployeeId}`, {
+        const res = await fetch(`/api/users/${parsedEmployeeId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -60,7 +66,7 @@ export const updateEmployeeRole = (employeeId, roleId) => async (dispatch) => {
 export const deleteEmployee = (employeeId) => async (dispatch) => {
     const parsedEmployeeId = parseInt(employeeId, 10)
     try {
-        const res = await fetch(`/users/${parsedEmployeeId}`, {
+        const res = await fetch(`/api/users/${parsedEmployeeId}`, {
             method: 'DELETE'
         })
 
