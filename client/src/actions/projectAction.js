@@ -1,5 +1,7 @@
 export const LOAD_PROJECTS = 'LOAD_PROJECTS'
 export const ADD_PROJECT = 'ADD_PROJECT'
+export const REMOVE_PROJECTS = 'REMOVE_PROJECTS'
+
 
 //actions
 const loadProjects = (projects) => ({
@@ -10,6 +12,10 @@ const loadProjects = (projects) => ({
 const addProject = (project) => ({
     type: ADD_PROJECT,
     project
+})
+
+export const removeProjects = () => ({
+    type: REMOVE_PROJECTS
 })
 
 

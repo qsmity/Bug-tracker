@@ -32,12 +32,13 @@ const ProjectTable = ({ projectsArray }) => {
                         </td>
                         <td>{project.description}</td>
                         <td>
-                            {project.Employees.map(employee => {
+                            {project.Employees ? project.Employees.map(employee => {
                                 return <li key={employee.id}>
                                     {employee.name}
                                 </li>
                             }
-                            )}
+                            ): ''
+                        }
                         </td>
                         <td>{project.comments ?
                             project.comments.map(comment => {

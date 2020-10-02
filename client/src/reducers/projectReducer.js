@@ -1,6 +1,7 @@
 import {
     ADD_PROJECT,
     LOAD_PROJECTS,
+    REMOVE_PROJECTS,
 
 } from '../actions/projectAction'
 
@@ -21,6 +22,8 @@ const projectReducer = (state = {}, action) => {
                 [action.project.id]: action.project
             }
             return nextState
+        case REMOVE_PROJECTS: 
+            return {}
         default:
             return state
     }

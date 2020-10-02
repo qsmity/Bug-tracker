@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { removeEmployees } from './employeeAction'
+import { removeProjects } from './projectAction'
 export const LOAD_SESSION = 'LOAD_SESSION'   
 export const REMOVE_SESSION = 'REMOVE_SESSION' 
 
@@ -56,6 +57,7 @@ export const logout = () => (dispatch) => {
     Cookies.remove('token')
     dispatch(removeSession())
     dispatch(removeEmployees())
+    dispatch(removeProjects())
 } 
 
 export const signup = ( name, email, password ) => async (dispatch) => {

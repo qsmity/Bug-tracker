@@ -26,6 +26,9 @@ export const getEmployees = () => async (dispatch) => {
 
         //logged in user
         const { employees } = await res.json()
+        if(!res.ok){    
+            throw res
+        }
         dispatch(loadEmployees(employees))
     } catch (err) {
         console.log(err)
