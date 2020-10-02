@@ -10,6 +10,7 @@ const getUserToken = (user) => {
   const userDataForToken = {
     id: user.id,
     email: user.email,
+    role: user.roleId
   };
 
   // Create the token.
@@ -32,7 +33,7 @@ const restoreUser = (req, res, next) => {
     // Send a "401 Unauthorized" response status code
     return res.status(401).end();
   }
-
+console.log('in restore user token');
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
     if (err) {
       err.status = 401;

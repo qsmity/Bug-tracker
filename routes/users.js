@@ -1,5 +1,5 @@
 const express = require('express')
-const { Employee } = require('../db/models')
+const { Employee, Project } = require('../db/models')
 const { asyncHandler, handleValidationErrors } = require('./utils')
 const bcrypt = require('bcryptjs')
 const { requireAuth, getUserToken} = require('../auth')
@@ -27,6 +27,15 @@ const validateEmailAndPassword = [
       .withMessage("Please provide a password."),
     handleValidationErrors,
   ];
+  router.get('/:employeeId', asyncHandler( async (req, res, next) => {
+    const employeeId = req.params.employeeId
+    const employee = await Employee.findOne({
+        where: {
+            id: employeeId
+        }
+    })
+    res.json({ employee })
+  }))
 
 //get all users in db for admin role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
@@ -36,10 +45,12 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     console.log(permissionAdmin.granted)
 
     if(permissionAdmin.granted){
-        const users = await Employee.findAll()
-        if (users) {
+        const employees = await Employee.findAll({
+            include: [Project]
+        })
+        if (employees) {
             res.status(200)
-            res.json({ users })
+            res.json({ employees })
         } else {
     
             res.status(404).send('resource not found')
@@ -56,7 +67,12 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 }))
 
 //create new unassigned user in the db for admin to assign and set cookie
-router.post('/', asyncHandler( async ( req, res ) => {
+router.post('/', 
+    [check('name')
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a name")],
+    validateEmailAndPassword,
+    asyncHandler( async ( req, res ) => {
     const { name , email, password } = req.body
     // console.log(name, email, password)
 
@@ -74,34 +90,27 @@ router.post('/', asyncHandler( async ( req, res ) => {
 //update user role in db (admin role only)
 router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
-    const employeeId = req.params.employeeId
+    const employeeId = parseInt(req.params.employeeId,10)
 
+    //get roleid from body
+    const { roleId } = req.body
+    let parsedRoleId = parseInt(roleId)
+    if(parsedRoleId === 0){
+        parsedRoleId = null
+    }
+
+    //grabbing role from req to verify permissions (admin)
     const role = req.user.role
-    console.log(role)
+
     //admin role which returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).updateAny('employees')
     console.log(permissionAdmin.granted)
 
     if(permissionAdmin.granted){
-        //the req should automatically send the already created user info to update
-        // const { name , email, hashedPassword } = req.body
-    
-        //testing purposes for postman
-        const { name , email, password} = req.body
-        const hashedPassword = bcrypt.hashSync(password)
-    
-        //will set up roleId functionality later
-        const roleId = 3
-
-        // console.log(name, email, password)
-
         const employee = await Employee.findByPk(employeeId)
-        // console.log(employee)
-        
-    
-        //password should already be hashed, just updating 
+       
         if(employee){
-            const updatedEmployee = await employee.update({ name, email, hashedPassword, roleId })
+            const updatedEmployee = await employee.update({ roleId: parsedRoleId })
             res.json({ updatedEmployee })
         } else {
             next(userNotFoundError(employeeId))
