@@ -19,7 +19,6 @@ const Project = () => {
     //handle on click create projecdt
     const addProject = (e) => {
         setIsHidden(!isHidden)
-        console.log(isHidden)
     }
 
     // console.log(Object.values(employees))

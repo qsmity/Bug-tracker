@@ -5,6 +5,7 @@ const cors = require('cors')
 const { environment } = require('./config/index')
 const { ValidationError } = require("sequelize");
 const cookieParser = require('cookie-parser')
+const path = require('path')
 // const routes = require('./routes')
 
 //external imports 
@@ -22,14 +23,20 @@ const { projectsRouter } = require('./routes/projects')
 const ticketsRouter = require('./routes/tickets')
 
 //api mounted routes
-app.use('/users', usersRouter)
-app.use('/session', sessionRouter)
-app.use('/projects', projectsRouter)
-app.use('/tickets', ticketsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/session', sessionRouter)
+app.use('/api/projects', projectsRouter)
+app.use('/api/tickets', ticketsRouter)
 
 app.get('/', (req, res) => {
     res.send('all set up')
 })
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.get(/\/(?!api)*/, (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // 'create:any': ['*'],
 // 'read:any': ['*'],

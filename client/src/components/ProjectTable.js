@@ -1,18 +1,6 @@
 import React from 'react'
-// import { useSelector } from 'react-redux'
-// import { useDispatch } from 'react-redux'
-// import * as projectAction from '../actions/projectAction'
 
 const ProjectTable = ({ projectsArray }) => {
-    // const dispatch = useDispatch()
-
-    // const deleteEmployee = (e) => {
-    //     if (window.confirm('Are you sure you wish to delete this item?')){
-    //         dispatch(employeeAction.deleteEmployee(e.target.id))
-    //     }
-    //     return
-    // }
-
     return (
         <table>
             <thead>

@@ -31,7 +31,7 @@ export const login = ( email, password ) => async (dispatch) => {
     
     //make a fetch call to db to login user
     try{
-        const res = await fetch('/session', {
+        const res = await fetch('/api/session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ export const signup = ( name, email, password ) => async (dispatch) => {
     
     //make a fetch call to db to login user
     try{
-        const res = await fetch('/users', {
+        const res = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

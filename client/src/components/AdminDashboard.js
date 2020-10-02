@@ -1,6 +1,7 @@
 import React from 'react'
 import Employee from './Employee'
 import Project from './Project'
+import Ticket from './Ticket'
 import LogoutButton from './LogoutButton'
 import '../adminDashboard.css';
 
@@ -17,6 +18,9 @@ const AdminDashboard = () => {
             </div>
             <div className='employee-container'>
                 <Project />
+            </div>
+            <div className='employee-container'>
+                <Ticket />
             </div>
         </div>
     )

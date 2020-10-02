@@ -24,7 +24,7 @@ export const removeProjects = () => ({
 
 export const getProjects = () => async (dispatch) => {
     try {
-        const res = await fetch('/projects')
+        const res = await fetch('/api/projects')
 
         
         const { projects } = await res.json()
@@ -49,7 +49,7 @@ export const createProject = (name, description, employeeId) => async (dispatch)
     }
 
     try {
-        const res = await fetch('/projects', {
+        const res = await fetch('/api/projects', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
