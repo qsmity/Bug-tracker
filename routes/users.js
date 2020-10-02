@@ -57,6 +57,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         }
 
     } else {
+        res.status(401)
         const err = new Error('permission denied')
         err.title = 'permission denied'
         err.status = 401
@@ -124,6 +125,40 @@ router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) =
     }
 
 }))
+
+//delete employee in db (admin role only)
+router.delete('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) => {
+    //employeeId will be sent when the admin clicks on the user to update the role with
+    const employeeId = parseInt(req.params.employeeId,10)
+
+    //grabbing role from req to verify permissions (admin)
+    const role = req.user.role
+
+    //admin role which returns a boolean if permission granted
+    const permissionAdmin = ac.can(`${role}`).updateAny('employees')
+    console.log(permissionAdmin.granted)
+
+    if(permissionAdmin.granted){
+        //find employee in db to destroy
+        const employee = await Employee.findByPk(employeeId)
+       
+        if(employee){
+            await employee.destroy()
+            res.json({ message: `Deleted employee with id of ${employeeId}` })
+        } else {
+            next(userNotFoundError(employeeId))
+        }
+    } else {
+        res.status(401)
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to update resource']
+        next(err)
+    }
+
+}))
+
 
 
 module.exports = router
