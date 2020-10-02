@@ -1,32 +1,14 @@
-import React
-// , { useEffect} 
-from 'react'
-// import { useDispatch } from 'react-redux'
+import React from 'react'
 import Employee from './Employee'
+import LogoutButton from './LogoutButton'
 
 const AdminDashboard = () => {
-    // const dispatch = useDispatch()
-    // useEffect(() => {
-    //     return async () => {
-    //         try {
-    //             const res = await fetch('/users')
-    //             if (!res.ok) {
-    //                 throw res
-    //             }
-
-    //             const { employees } = await res.json()
-    //             console.log(employees)
-
-    //         } catch (err) {
-    //             console.log(err)
-    //         }
-
-    //     }
-    //     //add current userId
-    // })
     return (
         <div>
             <h1>admin dashboard</h1>
+            <nav>
+                <LogoutButton/>
+            </nav>
             <Employee />
         </div>
     )

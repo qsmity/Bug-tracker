@@ -1,5 +1,6 @@
 import {
-LOAD_EMPLOYEES
+LOAD_EMPLOYEES, 
+REMOVE_EMPLOYEES
 } from '../actions/employeeAction'
 
 
@@ -7,7 +8,13 @@ LOAD_EMPLOYEES
 const employeeReducer = (state = {}, action) => {
     switch(action.type){
         case LOAD_EMPLOYEES: 
-            return { employees: action.employees}
+            const nextState = {}
+            action.employees.map( employee => {
+               return nextState[employee.id] = employee
+            })
+            return nextState
+        case REMOVE_EMPLOYEES: 
+            return {}
         default: 
             return state
     }

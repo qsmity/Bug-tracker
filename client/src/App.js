@@ -3,6 +3,7 @@ import { Switch, NavLink, Route, Redirect } from 'react-router-dom'
 import LoginForm from './session/LoginForm'
 import AdminDashboard from './components/AdminDashboard'
 import { useSelector } from 'react-redux';
+import SignupForm from './session/SignupForm';
 
 //rest encapsulates path and exact being passed down
 //redirect user if not logged in
@@ -30,11 +31,13 @@ function App({token}) {
       <h1>bug_tracker_app</h1>
       <nav>
         <NavLink to='/login' >Login</NavLink>
+        <NavLink to='/signup' >SignUp</NavLink>
         <NavLink to='/admin/dashboard' >Dashboard</NavLink>
       </nav>
       <Switch>
-        <AuthRoute token={token} path='/login' component={LoginForm} />
         <ProtectedRoute token={token} exact path='/admin/dashboard' component={AdminDashboard} />
+        <AuthRoute exact token={token} path='/login' component={LoginForm} />
+        <AuthRoute token={token} path='/signup' component={SignupForm}/>
       </Switch>
     </div>
   );
