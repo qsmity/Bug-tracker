@@ -14,7 +14,6 @@ export const getTickets = () => async (dispatch) => {
             throw res
         }
         const { tickets } = await res.json()
-        console.log(tickets)
         dispatch(loadTickets(tickets))
     } catch (err) {
         console.log(err)

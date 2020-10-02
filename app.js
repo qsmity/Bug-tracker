@@ -28,9 +28,6 @@ app.use('/api/session', sessionRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/tickets', ticketsRouter)
 
-app.get('/', (req, res) => {
-    res.send('all set up')
-})
 
 app.use(express.static(path.join(__dirname, '/client/build')));
 

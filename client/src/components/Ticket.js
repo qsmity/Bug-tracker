@@ -1,28 +1,29 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getTickets } from '../actions/ticketAction'
+import TicketTable from './TicketTable'
 
 
-const Ticket = () => {
+const Ticket = ({ currentEmployeeRole, disabled }) => {
+    const dispatch = useDispatch()
     const tickets = useSelector(state => state.tickets)
     const ticketsArray = Object.values(tickets)
-    return (
-        <div>
-            <h1>Ticket Component</h1>
-            {ticketsArray.map(ticket => {
-                return <tr key={ticket.id}>
-                    <td>
-                        {ticket.name}
-                    </td>
-                    <td>{ticket.description}</td>
-                    <td>{ticket.severityLevel}</td>
-                    <td>{ticket.status}</td>
-                    <td>{ticket.type}</td>
-                    <td><button id={ticket.id}>Delete</button></td>
-                </tr>
-            }
-            )}
-        </div>
-    )
+
+    useEffect(() => {
+        dispatch(getTickets())
+    }, [dispatch])
+
+    if (ticketsArray.length > 0) {
+        return (
+            <div>
+                <h1>Ticket Component</h1>
+                <TicketTable disabled={disabled} currentEmployeeRole={currentEmployeeRole} ticketsArray={ticketsArray} />
+            </div>
+        )
+    } else {
+        return <h1>No Tickets available</h1>
+    }
+
 }
 
 export default Ticket; 

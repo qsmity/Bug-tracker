@@ -29,7 +29,10 @@ export const getEmployees = () => async (dispatch) => {
         if(!res.ok){    
             throw res
         }
-        dispatch(loadEmployees(employees))
+        if(employees){
+            dispatch(loadEmployees(employees))
+        }
+        return
     } catch (err) {
         console.log(err)
         //enventually will push into errors array in store

@@ -31,12 +31,14 @@ module.exports = {
       projectId: {
         allowNull: false, 
         type: Sequelize.INTEGER,
-        references: {model: "Projects"}
+        references: {model: "Projects"},
+        onDelete: 'CASCADE'
       },
       employeeId: {
         allowNull: false, 
         type: Sequelize.INTEGER,
-        references: {model: "Employees"}
+        references: {model: "Employees"},
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

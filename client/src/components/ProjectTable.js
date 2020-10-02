@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProjectTable = ({ projectsArray }) => {
+const ProjectTable = ({ projectsArray, disabled }) => {
     return (
         <table>
             <thead>
@@ -36,7 +36,7 @@ const ProjectTable = ({ projectsArray }) => {
                             })
                             : <h3>no comments</h3>
                         }</td>
-                        <td><button id={project.id} >Delete</button></td>
+                        <td><button disabled={disabled} id={project.id} >Delete</button></td>
                     </tr>
                 }
                 )}

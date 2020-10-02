@@ -19,7 +19,8 @@
   "scripts": {
     "start": "per-env",
     "start:development": "nodemon -r dotenv/config ./bin/www",
-    "start:production": "node ./bin/www"
+    "start:production": "node ./bin/www",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

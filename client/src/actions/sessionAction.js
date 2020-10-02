@@ -81,6 +81,9 @@ export const signup = ( name, email, password ) => async (dispatch) => {
             },
             body: JSON.stringify(body)
         })
+        if(!res.ok){
+            throw res
+        }
         
         //grab current token
         const token = Cookies.get('token')

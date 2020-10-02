@@ -5,7 +5,7 @@ import AddProjectForm from './AddProjectForm'
 import ProjectTable from './ProjectTable'
 import '../project.css'
 
-const Project = () => {
+const Project = ({disabled}) => {
     const dispatch = useDispatch()
     const projects = useSelector(state => state.projects)
     const projectsArray = Object.values(projects)
@@ -25,12 +25,12 @@ const Project = () => {
     if (projectsArray.length > 0) {
         return (
             <div >
-                <button onClick={addProject}>add project</button>
+                <button disabled={disabled} onClick={addProject}>add project</button>
                 <div className={isHidden ? 'hidden' : ''}>
                     <AddProjectForm />
                 </div>
                 <h1>Project component</h1>
-                <ProjectTable projectsArray={projectsArray} />
+                <ProjectTable disabled={disabled} projectsArray={projectsArray} />
             </div>
         )
     } else {
