@@ -1,13 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTickets } from '../actions/ticketAction'
+import EditTicketPopup from './EditTicketPopup'
 import TicketTable from './TicketTable'
 
 
-const Ticket = ({ currentEmployeeRole, disabled }) => {
+const Ticket = ({ disabled }) => {
     const dispatch = useDispatch()
     const tickets = useSelector(state => state.tickets)
     const ticketsArray = Object.values(tickets)
+
+    //grab ticket name and description for edit button popup
+    const [ticketName, setTicketName] = useState('hello')
+    const [ticketDescr, setTicketDescr] = useState('goodbye')
+
+    //hidden state for edit ticket popup
+    const [isHidden, setIsHidden] = useState(true)
+    
+    //edit button will pass  necessary ticket info nested in the edit button dataset attribute, onclick
+    const hidePopup = (ticketNamePopup, ticketDescrPopup) => {
+        
+        if(isHidden === true){
+            setIsHidden(false)
+            setTicketName(ticketNamePopup)
+            setTicketDescr(ticketDescrPopup)
+        } else {
+            setIsHidden(true)
+        }
+        
+    }
 
     useEffect(() => {
         dispatch(getTickets())
@@ -15,9 +36,12 @@ const Ticket = ({ currentEmployeeRole, disabled }) => {
 
     if (ticketsArray.length > 0) {
         return (
-            <div>
-                <h1>Ticket Component</h1>
-                <TicketTable disabled={disabled} currentEmployeeRole={currentEmployeeRole} ticketsArray={ticketsArray} />
+            <div className='ticket'>
+                <div>
+                    <h1>Tickets</h1>
+                    <TicketTable hidePopup={hidePopup} disabled={disabled} ticketsArray={ticketsArray} />
+                </div>
+                { !isHidden ? <EditTicketPopup ticketName={ticketName} ticketDescr={ticketDescr} hidePopup={hidePopup} /> : null}
             </div>
         )
     } else {

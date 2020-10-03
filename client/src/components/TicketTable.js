@@ -1,7 +1,16 @@
 import React from 'react'
 
 
-const TicketTable = ({ ticketsArray, currentEmployeeRole, disabled }) => {
+
+const TicketTable = ({ ticketsArray, disabled, hidePopup}) => {
+
+    //handle edit click
+    const editTicket = (e) => {
+        // console.log(e.target.dataset.name)
+        // console.log(e.target.dataset.descr)
+        hidePopup(e.target.dataset.name, e.target.dataset.descr)
+    }
+    
     return (
         <table>
             <thead>
@@ -24,6 +33,7 @@ const TicketTable = ({ ticketsArray, currentEmployeeRole, disabled }) => {
                     <td>{ticket.status}</td>
                     <td>{ticket.type}</td>
                     <td><button disabled={disabled} id={ticket.id}>Delete</button></td>
+                    <td><button onClick={editTicket} disabled={disabled} id={ticket.id} data-name={ticket.name} data-descr={ticket.description}>Edit</button></td>
                 </tr>
             }
             )}

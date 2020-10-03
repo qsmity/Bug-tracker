@@ -11,3 +11,48 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.employee-container{
+  border: 1px solid black; 
+  width: 85%;
+  margin: 10px auto; 
+  text-align: center;
+}
+
+/* .ticket{
+  position: relative;
+} */
+
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+ 
+}
+
+.popup__content{
+  position: absolute;
+  width: 40%;
+  height:40%;
+  left: 30%;
+  top: 30%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.close:hover{
+  color: cyan
+}
+
+.close{
+  float: right;
+  cursor: pointer;
+}
+
+.hidden{
+  display: none
+}

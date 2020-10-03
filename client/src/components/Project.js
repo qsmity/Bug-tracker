@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProjects } from '../actions/projectAction'
 import AddProjectForm from './AddProjectForm'
 import ProjectTable from './ProjectTable'
-import '../project.css'
+
 
 const Project = ({disabled}) => {
     const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const Project = ({disabled}) => {
                 <div className={isHidden ? 'hidden' : ''}>
                     <AddProjectForm />
                 </div>
-                <h1>Project component</h1>
+                <h1>Projects</h1>
                 <ProjectTable disabled={disabled} projectsArray={projectsArray} />
             </div>
         )

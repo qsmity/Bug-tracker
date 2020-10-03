@@ -36,7 +36,7 @@ const Employee = () => {
     if (employeesArray.length > 0) {
         return (
             <div>
-                <h1>employee component</h1>
+                <h1>Employees</h1>
 
                 <EmployeeTable employeesArray={employeesArray}/>
             <form onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const Employee = () => {
             </div>
         )
     } else {
-        return <h2>no employees available</h2>
+        return null
     }
 
 

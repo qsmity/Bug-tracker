@@ -3,7 +3,6 @@ import Employee from './Employee'
 import Project from './Project'
 import Ticket from './Ticket'
 import LogoutButton from './LogoutButton'
-import '../dashboard.css';
 import { useSelector } from 'react-redux'
 
 
@@ -29,13 +28,13 @@ const Dashboard = () => {
                 <LogoutButton  />
             </nav>
             <div className='employee-container'>
-                <Employee disabled={disabled} currentEmployeeRole={currentEmployeeRole}/>
+                <Employee disabled={disabled}/>
             </div>
             <div className='employee-container'>
-                <Project disabled={disabled} currentEmployeeRole={currentEmployeeRole}/>
+                <Project disabled={disabled}/>
             </div>
             <div className='employee-container'>
-                <Ticket disabled={disabled} currentEmployeeRole={currentEmployeeRole}/>
+                <Ticket disabled={disabled}/>
             </div>
         </div>
     )

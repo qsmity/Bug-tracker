@@ -6,6 +6,7 @@ const { requireAuth, getUserToken} = require('../auth')
 const { check } = require('express-validator')
 const AcessControl = require('accesscontrol')
 const { grantsObject, ac } = require('./projects')
+const Op = require('sequelize').Op
 
 
 const router = express.Router()
@@ -53,6 +54,11 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 
     if(permissionAdmin.granted){
         const employees = await Employee.findAll({
+            where: {
+                id: {
+                    [Op.not]: req.user.id
+                }
+            },
             include: [Project]
         })
         if (employees) {

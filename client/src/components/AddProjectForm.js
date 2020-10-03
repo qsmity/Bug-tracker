@@ -26,6 +26,8 @@ const AddProjectForm = () => {
     const addProject = (e) => {
         e.preventDefault()
         dispatch(createProject(name, description, selectedEmployeeId))
+        setName('')
+        setDescription('')
         
     }
     return (

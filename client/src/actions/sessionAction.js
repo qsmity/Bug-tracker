@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import { removeEmployees } from './employeeAction'
 import { removeProjects } from './projectAction'
+import { removeTickets } from './ticketAction'
 export const LOAD_SESSION = 'LOAD_SESSION'   
 export const REMOVE_SESSION = 'REMOVE_SESSION' 
 
@@ -58,6 +59,7 @@ export const logout = () => (dispatch) => {
     dispatch(removeSession())
     dispatch(removeEmployees())
     dispatch(removeProjects())
+    dispatch(removeTickets())
 } 
 
 export const signup = ( name, email, password ) => async (dispatch) => {
