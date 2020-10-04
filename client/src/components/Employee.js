@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getEmployees } from '../actions/employeeAction'
-import EmployeeTable from './EmployeeTable'
 import { updateEmployeeRole } from '../actions/employeeAction'
+import EmployeeTable2 from './EmployeeTable2'
 
 const Employee = ({employeesArray}) => {
     const dispatch = useDispatch()
@@ -34,7 +34,8 @@ const Employee = ({employeesArray}) => {
     if (employeesArray.length > 0) {
         return (
             <div>
-                <EmployeeTable employeesArray={employeesArray}/>
+                {/* <EmployeeTable employeesArray={employeesArray}/> */}
+                <EmployeeTable2  employeesArray={employeesArray}/>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='employee'>Edit Employee Roles: </label>
                 <select onChange={selectedEmployee} id='employee' name='employee' value={selectedEmployeeId} required>

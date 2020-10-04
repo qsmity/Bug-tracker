@@ -1,8 +1,9 @@
 import React from 'react'
+import * as mui from '@material-ui/core';
 
 
 
-const TicketTable = ({ ticketsArray, disabled, hidePopup}) => {
+const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
     console.log('ticketsArray inside ticket table', ticketsArray)
     //handle edit click
     const editTicket = (e) => {
@@ -10,37 +11,47 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup}) => {
         // console.log(e.target.dataset.descr)
         hidePopup(e.target.dataset.name, e.target.dataset.descr, e.target.id)
     }
-    
+
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>name</th>
-                    <th>description</th>
-                    <th>severity level</th>
-                    <th>status</th>
-                    <th>type</th>
-                    <th>assigned employee</th>
-                </tr>
-            </thead>
-            <tbody>
-            {ticketsArray.map(ticket => {
-                return <tr key={ticket.id}>
-                    <td>
-                        {ticket.name}
-                    </td>
-                    <td>{ticket.description}</td>
-                    <td>{ticket.severityLevel}</td>
-                    <td>{ticket.status}</td>
-                    <td>{ticket.type}</td>
-                    <td>{ticket.Employee}</td>
-                    <td><button disabled={disabled} id={ticket.id}>Delete</button></td>
-                    <td><button onClick={editTicket} disabled={disabled} id={ticket.id} data-name={ticket.name} data-descr={ticket.description}>Edit</button></td>
-                </tr>
-            }
-            )}
-            </tbody>
-        </table>
+        <>
+            <mui.TableContainer>
+                <mui.Table>
+                    <mui.TableHead>
+                        <mui.TableRow>
+                            <mui.TableCell>Name</mui.TableCell>
+                            <mui.TableCell>Description</mui.TableCell>
+                            <mui.TableCell>Severity Level</mui.TableCell>
+                            <mui.TableCell>Status</mui.TableCell>
+                            <mui.TableCell>Assigned Empoyee</mui.TableCell>
+                            <mui.TableCell></mui.TableCell>
+                            <mui.TableCell></mui.TableCell>
+                        </mui.TableRow>
+                    </mui.TableHead>
+                </mui.Table>
+                <div style={{ overflow: 'auto', height: '300px'}}>
+                    <mui.Table size="small" aria-label="a dense table">
+                        <mui.TableBody>
+                            {ticketsArray.map(ticket => {
+                                return (
+                                    <>
+                                        <mui.TableRow key={ticket.id}>
+                                            <mui.TableCell>{ticket.name}</mui.TableCell>
+                                            <mui.TableCell>{ticket.description}</mui.TableCell>
+                                            <mui.TableCell>{ticket.severityLevel}</mui.TableCell>
+                                            <mui.TableCell>{ticket.status}</mui.TableCell>
+                                            <mui.TableCell>{ticket.Employee}</mui.TableCell>
+                                            <mui.TableCell><mui.Button id={ticket.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
+                                            <mui.TableCell><mui.Button onClick={editTicket} disabled={disabled} id={ticket.id} data-name={ticket.name} data-descr={ticket.description} className='hi'>Edit</mui.Button></mui.TableCell>
+                                        </mui.TableRow>
+                                    </>
+                                )
+                            })}
+
+                        </mui.TableBody>
+                    </mui.Table>
+                </div>
+            </mui.TableContainer>
+        </>
     )
 }
 

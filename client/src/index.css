@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
 body {
   margin: 0;
-  font-size: 12px;
+  font-size: 16px;
   font-family: Helvetica, Arial, sans-serif;
   background-color: rgba(218, 214, 214, 0.37);
 }
@@ -11,14 +13,40 @@ body {
 } */
 .dashboard-grid{
   display: grid;
-  gap: 30px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  margin: 130px auto 0 auto
+  row-gap: 30px;
+  grid-template-columns: 0.5fr 1fr;
+  grid-template-rows: 1fr;
+  margin: 170px auto 30px auto;
+  grid-template-areas: 
+  "employee ticket"
+  "project project"
+  ;
+
 }
 
-.dashboard-grid__component{
-  width: 85%;
+.dashboard-grid__component-employee{
+  height: 450px;
+  width: 90%;
+  margin: 10px auto; 
+  text-align: center;
+  box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
+  background-color: white;
+
+}
+.dashboard-grid__component-project{
+  grid-area: project;
+  height: 750px;
+  width: 90%;
+  margin: 10px auto; 
+  text-align: center;
+  box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
+  background-color: white;
+}
+
+.dashboard-grid__component-ticket{
+  grid-area: ticket;
+  height: 425px;
+  width: 90%;
   margin: 10px auto; 
   text-align: center;
   box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
@@ -39,6 +67,7 @@ body {
   background-image: linear-gradient(to right, rgb(255, 174, 0) ,rgba(252, 156, 2, 0.644));
   box-shadow: 10px 10px 8px -10px #888888;
   border-radius: 2px;
+  font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: white
 
@@ -61,6 +90,7 @@ body {
   /* width and height for the overlay lightgrey background */
   width: 100%;
   height: 100%;
+  z-index: 2;
  
 }
 
@@ -90,4 +120,9 @@ body {
 
 .dashboard-grid__component--hidden{
   display: none;
+}
+
+Button:disabled{
+  text-decoration: line-through;
+  background-color: darkgray;
 }

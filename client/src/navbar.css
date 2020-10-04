@@ -6,7 +6,7 @@
     position: fixed;
     top: 0;
     background-color: lightgray;
-    height: 15vh;
+    height: 10vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -18,7 +18,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
+    font-size: 30px;
 }
 
 .navbar__logout{
@@ -27,7 +28,7 @@
 
 .menu-bars, .nav-menu__close {
     margin: 0 15px;
-    font-size: 30px;
+    font-size: 40px;
     background: none;
 }
 
