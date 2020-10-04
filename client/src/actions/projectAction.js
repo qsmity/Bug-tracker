@@ -39,9 +39,7 @@ export const getProjects = () => async (dispatch) => {
 }
 
 export const createProject = (name, description, employeeId) => async (dispatch) => {
-    //fetch call to create project for admin only
-    //dispatch add project
-
+    //manually making array. git rid of this when multi select created for form
     const employeeIdArray = [employeeId]
 
     const body = {

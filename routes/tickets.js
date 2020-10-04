@@ -23,13 +23,15 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         let tickets;
         if (permissionAdminSubmitter.granted) {
             tickets = await Ticket.findAll({
-                include: [Project]
+                include: [Project],
+                include: [Employee]
             })
 
             //only get tickets assigned to (dev, projectManager)
         } else {
             tickets = await Ticket.findAll({
                 include: [Project],
+                incude: [Employee],
                 where: {
                     employeeId
                 }
@@ -54,7 +56,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 }))
 
 // create project (admin role)
-router.post('/',requireAuth,
+router.post('/', requireAuth,
     asyncHandler(async (req, res, next) => {
 
         const role = req.user.role
@@ -92,51 +94,69 @@ router.post('/',requireAuth,
 
     }))
 
-//edit project admin
-router.put('/', requireAuth, asyncHandler(async (req, res, next) => {
+//edit ticket (admin - all fields), (dev - status level)
+router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
+    const ticketId = parseInt(req.params.ticketId, 10)
+    const role = req.user.role
+    const permissionAdmin = ac.can(`${role}`).updateAny('tickets')
+    const permissionDev = ac.can(`${role}`).updateOwn('tickets')
 
-        const role = req.user.role
-        const permissionAdmin = ac.can(`${role}`).updateAny('projects')
+    //grab employee id's from employeeIdArray sent to associate employee with project created
+    const { name, description, severityLevel, status, type, employeeId } = req.body
 
-        //grab employee id's from employeeIdArray sent to associate employee with project created
-        const { name, description, employeeIdArray } = req.body
-        
-        //find project in db to update
-        const project = await Project.findOne({
+    const parsedEmployeeId = parseInt(employeeId, 10)
+    //find project in db to update
+
+    console.log(employeeId);
+    if (permissionAdmin.granted) {
+        //not updating project id because ticket is created for one specific proj
+        await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
             where: {
-                name
+                id: ticketId
             }
-        });
-
-        if (permissionAdmin.granted) {
-            if (!employeeIdArray) {
-                //update proj in db
-                project.update({ name, description })
-            } else {
-                project.update({ name, description })
-
-                //map over array to add association for each employee
-                employeeIdArray.map(async id => {
-                    //find employee in db
-                    const employee = await Employee.findByPk(id)
-                    //update association
-                    project.addEmployee(employee)
-                })
-            }
-            res.status(201)
-            res.json({ project })
-
-        } else {
-            const err = new Error('permission denied')
-            err.title = 'permission denied'
-            err.status = 401
-            err.errors = ['role not permitted to create resource']
-            next(err)
         }
+        )
+
+        const ticket = await Ticket.findOne({
+            include: [Employee],
+            where: {
+                id: ticketId
+            }
+        })
+
+
+        res.status(201)
+        res.json({ ticket })
+
+        //only update status if dev role
+    } else if (permissionDev.granted) {
+        await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
+            where: {
+                id: ticketId
+            }
+        }
+        )
+
+        const ticket = await Ticket.findOne({
+            include: [Employee],
+            where: {
+                id: ticketId
+            }
+        })
+
+        res.status(201)
+        res.json({ updatedTicket })
+    } else {
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to create resource']
+        next(err)
+    }
 
 
 
-    }))
+}))
 
 
 module.exports = router
