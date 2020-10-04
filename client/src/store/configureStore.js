@@ -16,10 +16,10 @@ const rootReducer = combineReducers({
 
 const storeEnhancer = composeEnhancers(applyMiddleware(thunk))
 
-const configureStore = (initialState) => {
+const configureStore = (preloadedState) => {
     return createStore(
         rootReducer,
-        initialState,
+        preloadedState,
         storeEnhancer
     )
 }

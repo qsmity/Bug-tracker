@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, NavLink, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import LoginForm from './session/LoginForm'
-import Dashboard from './components/Dashboard'
+import Dashboard from './pages/Dashboard'
 import { useSelector } from 'react-redux';
 import SignupForm from './session/SignupForm';
 
@@ -27,19 +28,15 @@ const AuthRoute = ({ component: Component, token, ...rest }) => {
 
 function App({token}) {
   return (
-    <div>
-      <h1>Trackerfy</h1>
-      <nav>
-        <NavLink to='/login' >Login</NavLink>
-        <NavLink to='/signup' >Sign Up</NavLink>
-        <NavLink to='/admin/dashboard' >Dashboard</NavLink>
-      </nav>
-      <Switch>
-        <ProtectedRoute token={token} exact path='/admin/dashboard' component={Dashboard} />
-        <AuthRoute exact token={token} path='/login' component={LoginForm} />
-        <AuthRoute token={token} path='/signup' component={SignupForm}/>
-      </Switch>
-    </div>
+    <>
+    <BrowserRouter>
+        <Switch>
+          <ProtectedRoute token={token} exact path='/admin/dashboard' component={Dashboard} />
+          <AuthRoute exact token={token} path='/login' component={LoginForm} />
+          <AuthRoute token={token} path='/signup' component={SignupForm}/>
+        </Switch>
+    </BrowserRouter>
+    </>
   );
 }
 

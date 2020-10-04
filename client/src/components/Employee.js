@@ -4,12 +4,10 @@ import { getEmployees } from '../actions/employeeAction'
 import EmployeeTable from './EmployeeTable'
 import { updateEmployeeRole } from '../actions/employeeAction'
 
-const Employee = () => {
+const Employee = ({employeesArray}) => {
     const dispatch = useDispatch()
-    const employees = useSelector(state => state.employees)
     const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
     const [roleToChange, setRoleToChange] = useState('')
-    const employeesArray = Object.values(employees)
 
     useEffect(() => {
         dispatch(getEmployees())
@@ -36,8 +34,6 @@ const Employee = () => {
     if (employeesArray.length > 0) {
         return (
             <div>
-                <h1>Employees</h1>
-
                 <EmployeeTable employeesArray={employeesArray}/>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='employee'>Edit Employee Roles: </label>
@@ -65,7 +61,7 @@ const Employee = () => {
             </div>
         )
     } else {
-        return null
+        return <h1>N/A</h1>
     }
 
 

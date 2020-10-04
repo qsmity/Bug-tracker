@@ -29,7 +29,6 @@ const Project = ({disabled}) => {
                 <div className={isHidden ? 'hidden' : ''}>
                     <AddProjectForm />
                 </div>
-                <h1>Projects</h1>
                 <ProjectTable disabled={disabled} projectsArray={projectsArray} />
             </div>
         )

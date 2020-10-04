@@ -80,6 +80,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 
 }))
 
+//signup
 //create new unassigned user in the db for admin to assign and set cookie
 router.post('/', 
     [check('name')

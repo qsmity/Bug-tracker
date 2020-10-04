@@ -1,0 +1,14 @@
+.login{
+    margin-top: 30vh;
+    width: 50%
+}
+
+.login-navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-navbar__header{
+    margin: 0; 
+}

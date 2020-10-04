@@ -40,7 +40,6 @@ const Ticket = ({ disabled }) => {
         return (
             <div className='ticket'>
                 <div>
-                    <h1>Tickets</h1>
                     <TicketTable hidePopup={hidePopup} disabled={disabled} ticketsArray={ticketsArray} />
                 </div>
                 { !isHidden ? <EditTicketPopup ticketId={ticketId} ticketName={ticketName} ticketDescr={ticketDescr} hidePopup={hidePopup} /> : null}

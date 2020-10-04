@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 //not using HOC container so don't need to import * from sessionAction to avoid namespce collision
 import { login } from '../actions/sessionAction'
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom'
+// import * as FaIcons from 'react-icons/fa'
+import * as CgIcons from 'react-icons/cg'
+
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -17,14 +21,22 @@ const LoginForm = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={loginUser}>
-                <h2>login here</h2>
-                <input onChange={updateEmail} name='email' type='email' value={email} required />
-                <input onChange={updatePassword} name='password' type='password' value={password} required />
-                <button type='submit'>Submit</button>
-            </form>
-        </div>
+        <>
+            <div className='navbar login-navbar'>
+                <NavLink to='#' className='menu-bars'>
+                    <CgIcons.CgTrack />
+                </NavLink>
+                <h1 className='navbar__header login-navbar__header'>Trackerfy</h1>
+            </div>
+            <div className='dashboard-grid__component login'>
+                <div className='component__topbar'><h2>Login Here</h2></div>
+                <form onSubmit={loginUser}>
+                    <input onChange={updateEmail} name='email' type='email' value={email} required />
+                    <input onChange={updatePassword} name='password' type='password' value={password} required />
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
+        </>
     )
 }
 
