@@ -34,6 +34,7 @@ function App({token}) {
           <ProtectedRoute token={token} exact path='/admin/dashboard' component={Dashboard} />
           <AuthRoute exact token={token} path='/login' component={LoginForm} />
           <AuthRoute token={token} path='/signup' component={SignupForm}/>
+          <AuthRoute token={token} path='/' component={LoginForm}/>
         </Switch>
     </BrowserRouter>
     </>
