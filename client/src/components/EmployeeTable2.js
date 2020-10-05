@@ -2,21 +2,10 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import * as employeeAction from '../actions/employeeAction'
 import * as mui from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 
 
 const EmployeeTable2 = ({ employeesArray }) => {
-    const useStyles = makeStyles({
-        root: {
-            fontSize: '20px',
-        },
-        table: {
-            fontSize: '20px'
-        },
-    });
-    const classes = useStyles();
-
     const dispatch = useDispatch()
     const mapRoleIdToName = (roleId) => {
         switch (roleId) {
@@ -58,13 +47,11 @@ const EmployeeTable2 = ({ employeesArray }) => {
                         <mui.TableBody>
                             {employeesArray.map(employee => {
                                 return (
-                                    <>
                                         <mui.TableRow key={employee.id}>
                                             <mui.TableCell>{employee.name}</mui.TableCell>
                                             <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
                                             <mui.TableCell><mui.Button id={employee.id} onClick={deleteEmployee}>Delete</mui.Button></mui.TableCell>
                                         </mui.TableRow>
-                                    </>
                                 )
                             })}
 

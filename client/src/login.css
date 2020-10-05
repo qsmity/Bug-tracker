@@ -5,10 +5,29 @@
 
 .login-navbar{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
     font-size: 25px;
+}
+
+.login-navbar__logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-navbar__button{
+    margin-left: 17%;
+    margin-right: 5%;
+    display: flex;
+    width: 300px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.login-navbar__text{
+    font-size: 30px;
 }
 
 .login-navbar__header{

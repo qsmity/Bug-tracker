@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProjects } from '../actions/projectAction'
 import AddProjectForm from './AddProjectForm'
 import ProjectTable from './ProjectTable'
+import * as mui from '@material-ui/core';
+
 
 
 const Project = ({disabled}) => {
@@ -25,7 +27,7 @@ const Project = ({disabled}) => {
     if (projectsArray.length > 0) {
         return (
             <div >
-                <button disabled={disabled} onClick={addProject}>add project</button>
+                <mui.Button  variant='contained' disabled={disabled} onClick={addProject}>add project</mui.Button>
                 <div className={isHidden ? 'hidden' : ''}>
                     <AddProjectForm />
                 </div>

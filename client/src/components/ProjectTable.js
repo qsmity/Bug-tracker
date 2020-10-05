@@ -1,5 +1,7 @@
 import React from 'react'
 import * as mui from '@material-ui/core';
+import * as FiIcons from 'react-icons/fi'
+
 
 const ProjectTable = ({ projectsArray, disabled }) => {
     return (
@@ -16,12 +18,11 @@ const ProjectTable = ({ projectsArray, disabled }) => {
                         </mui.TableRow>
                     </mui.TableHead>
                 </mui.Table>
-                <div style={{ overflow: 'auto', height: '500px'}}>
+                <div style={{ overflow: 'auto', height: '400px' }}>
                     <mui.Table size="small" aria-label="a dense table">
                         <mui.TableBody>
                             {projectsArray.map(project => {
                                 return (
-                                    <>
                                         <mui.TableRow key={project.id}>
                                             <mui.TableCell>{project.name}</mui.TableCell>
                                             <mui.TableCell>{project.description}</mui.TableCell>
@@ -45,15 +46,15 @@ const ProjectTable = ({ projectsArray, disabled }) => {
                                                             const parsedEmployeeId = parseInt(employeeId, 10)
                                                             return <li key={parsedEmployeeId}>{text}</li>
                                                         })
-                                                        : <h3>no comments</h3>
+                                                        : 'no comments'
                                                     }
 
                                                 </ul>
                                             </mui.TableCell>
+                                            <mui.TableCell><FiIcons.FiEdit2 className='edit-icon' disabled={disabled} onClick={(e) => console.log('hello')} />
+                                            </mui.TableCell>
                                             <mui.TableCell><mui.Button id={project.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
-                                        </mui.TableRow>
-                                    </>
-                                )
+                                        </mui.TableRow>                                )
                             })}
 
                         </mui.TableBody>

@@ -7,13 +7,14 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
     console.log('ticketsArray inside ticket table', ticketsArray)
     //handle edit click
     const editTicket = (e) => {
-        // console.log(e.target.dataset.name)
-        // console.log(e.target.dataset.descr)
+        console.log(e.target.dataset.name)
+        console.log(e.target.dataset.descr)
+        console.log(e.target.id)
         hidePopup(e.target.dataset.name, e.target.dataset.descr, e.target.id)
     }
 
     return (
-        <>
+    <>
             <mui.TableContainer>
                 <mui.Table>
                     <mui.TableHead>
@@ -33,7 +34,6 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                         <mui.TableBody>
                             {ticketsArray.map(ticket => {
                                 return (
-                                    <>
                                         <mui.TableRow key={ticket.id}>
                                             <mui.TableCell>{ticket.name}</mui.TableCell>
                                             <mui.TableCell>{ticket.description}</mui.TableCell>
@@ -41,10 +41,9 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                                             <mui.TableCell>{ticket.status}</mui.TableCell>
                                             <mui.TableCell>{ticket.Employee}</mui.TableCell>
                                             <mui.TableCell><mui.Button id={ticket.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
-                                            <mui.TableCell><mui.Button onClick={editTicket} disabled={disabled} id={ticket.id} data-name={ticket.name} data-descr={ticket.description} className='hi'>Edit</mui.Button></mui.TableCell>
+                                            <mui.TableCell><mui.Button onClick={editTicket} disabled={disabled}><div id={ticket.id} data-name={ticket.name} data-descr={ticket.description}>Edit</div></mui.Button></mui.TableCell>
                                         </mui.TableRow>
-                                    </>
-                                )
+                                                                        )
                             })}
 
                         </mui.TableBody>

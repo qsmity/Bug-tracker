@@ -8,6 +8,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Project', null, {})
+    return queryInterface.bulkDelete('Projects', null, {})
   }
 };

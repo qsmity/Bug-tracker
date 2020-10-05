@@ -16,7 +16,7 @@ function Navbar() {
                     <FaIcons.FaBars onClick={toggleSidebar} />
                 </NavLink>
                 <div className='navbar__logo'>
-                    <CgIcons.CgTrack className='menu-bars menu-bars--purple'/>
+                    <CgIcons.CgTrack className='menu-bars menu-bars--purple' />
                     <h1>Trackerfy</h1>
                 </div>
                 <div className='navbar__logout'>
@@ -31,10 +31,7 @@ function Navbar() {
                         </NavLink>
                     </li>
                     <li className='nav-menu__item'>
-                        <NavLink className='nav-menu__link' to='/login' >Login</NavLink>
-                    </li>
-                    <li className='nav-menu__item'>
-                        <NavLink className='nav-menu__link' to='/signup' >Sign Up</NavLink>
+                        <NavLink className='nav-menu__link' to='#' >Profile</NavLink>
                     </li>
                     <li className='nav-menu__item'>
                         <NavLink className='nav-menu__link' to='/admin/dashboard' >Dashboard</NavLink>

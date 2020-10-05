@@ -30,6 +30,9 @@ const Dashboard = () => {
         <nav>
           <Navbar/>
         </nav>
+        <div>
+            {!currentEmployeeRole? <h2 style={{ marginTop: '10%', textAlign: 'center'}}>Wait To Be Assigned Role</h2> : null}
+        </div>
         <div className='dashboard-grid'>
             <div className={employeesArray.length <= 0 ? 'dashboard-grid__component-employee dashboard-grid__component--hidden' : 'dashboard-grid__component-employee'}>
                 <div className='component__topbar'><h2>Employees</h2></div>

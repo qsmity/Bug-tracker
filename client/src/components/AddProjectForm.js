@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createProject } from '../actions/projectAction'
+import * as mui from '@material-ui/core';
+
 
 
 
@@ -28,28 +30,28 @@ const AddProjectForm = () => {
         dispatch(createProject(name, description, selectedEmployeeId))
         setName('')
         setDescription('')
-        
+
     }
     return (
         <div>
-            <h1>project form</h1>
-            <form onSubmit={addProject}>
-                <label htmlFor='name'>Name:</label>
-                <input onChange={updateName} name='name' id='name' value={name}/>
-                <label htmlFor='description'>Description:</label>
-                <input onChange={updateDescription} name='description' id='description' value={description}/>
+            <form className='add-proj-form' onSubmit={addProject}>
+                <mui.TextField onChange={updateName} label='Name' id="standard-required" value={name} />
+                <mui.TextField onChange={updateDescription} rowsMax={4} label='Description' id='standard-multiline-flexible' value={description} />
+                <div className='add-proj-form__add-employee-dropdown'>
+                    <mui.InputLabel id="demo-simple-select-label">Add Employee</mui.InputLabel>
+                    <mui.Select labelId='id="demo-simple-select-label"' onChange={selectedEmployee} id='employee' value={selectedEmployeeId}>
+                        <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
+                        {employeesArray.map(employee => (
+                            <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
 
-                <label htmlFor='employee'>Add Employee: </label>
-                <select onChange={selectedEmployee} id='employee' name='employee' value={selectedEmployeeId}>
-                    <option value='' key={-1}>Select Employee</option>
-                    {employeesArray.map(employee => (
-                        <option key={employee.id} value={employee.id}>{employee.name}</option>
-                        
-                    ))
-                    }
-                </select>
+                        ))
+                        }
+                    </mui.Select>
+                </div>
+                <div>
+                    <mui.Button variant='contained' type='submit'>Add</mui.Button>
 
-                <button type='submit'>Add</button>
+                </div>
             </form>
         </div>
 

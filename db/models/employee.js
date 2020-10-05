@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     const columnMapping = {
       through: "EmployeeProject",
       foreignKey: "employeeId",
-      // as: "employee",
       otherKey: "projectId",
       onDelete: "CASCADE",
       onUpdate: "CASCADE"

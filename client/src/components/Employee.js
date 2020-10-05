@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getEmployees } from '../actions/employeeAction'
 import { updateEmployeeRole } from '../actions/employeeAction'
 import EmployeeTable2 from './EmployeeTable2'
+import * as mui from '@material-ui/core';
+
 
 const Employee = ({employeesArray}) => {
     const dispatch = useDispatch()
@@ -34,29 +36,30 @@ const Employee = ({employeesArray}) => {
     if (employeesArray.length > 0) {
         return (
             <div>
-                {/* <EmployeeTable employeesArray={employeesArray}/> */}
                 <EmployeeTable2  employeesArray={employeesArray}/>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='employee'>Edit Employee Roles: </label>
-                <select onChange={selectedEmployee} id='employee' name='employee' value={selectedEmployeeId} required>
-                    <option value='' key={-1}>Select Employee</option>
+            <form className='employee-form' onSubmit={handleSubmit}>
+                <div className='employee-form__title'>Edit Employee Roles</div>
+                <mui.InputLabel id="demo-simple-select-label">Employee</mui.InputLabel>
+                <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' value={selectedEmployeeId} required>
+                    <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
                     {employeesArray.map(employee => (
-                        <option key={employee.id} value={employee.id}>{employee.name}</option>
+                        <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
                         
                     ))
                     }
-                </select>
-                <select onChange={roleChange} id='roles' name='roles' value={roleToChange} required>
-                    <option value='' key={-1}>Select Role</option>
-                    <option value={0} key={0}>no role</option>
-                    <option value={1} key={1}>admin</option>
-                    <option value={2} key={2}>project manager</option>
-                    <option value={3} key={3}>dev</option>
-                    <option value={4} key={4}>submitter</option>
+                </mui.Select>
+                <mui.InputLabel id="demo-simple-select-label">Role</mui.InputLabel>
+                <mui.Select labelId="demo-simple-select-label" onChange={roleChange} id='roles' name='roles' value={roleToChange} required>
+                    <mui.MenuItem value='' key={-1}>Select Role</mui.MenuItem>
+                    <mui.MenuItem value={0} key={0}>no role</mui.MenuItem>
+                    <mui.MenuItem value={1} key={1}>admin</mui.MenuItem>
+                    <mui.MenuItem value={2} key={2}>project manager</mui.MenuItem>
+                    <mui.MenuItem value={3} key={3}>dev</mui.MenuItem>
+                    <mui.MenuItem value={4} key={4}>submitter</mui.MenuItem>
                     
                     
-                </select>
-                <button type='submit'>Submit</button>
+                </mui.Select>
+                <mui.Button variant='contained' type='submit'>Submit</mui.Button>
             </form>
                 
             </div>
