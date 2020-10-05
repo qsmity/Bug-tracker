@@ -56,7 +56,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         const employees = await Employee.findAll({
             where: {
                 id: {
-                    [Op.not]: req.user.id
+                    [Op.notIn]: [req.user.id, 1,2,3,4]
                 }
             },
             include: [Project]
