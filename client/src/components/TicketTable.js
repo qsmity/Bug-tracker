@@ -14,7 +14,7 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
     }
 
     return (
-    <>
+        <>
             <mui.TableContainer>
                 <mui.Table>
                     <mui.TableHead>
@@ -28,27 +28,25 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                             <mui.TableCell></mui.TableCell>
                         </mui.TableRow>
                     </mui.TableHead>
-                </mui.Table>
-                <div style={{ overflow: 'auto', height: '300px'}}>
-                    <mui.Table size="small" aria-label="a dense table">
-                        <mui.TableBody>
-                            {ticketsArray.map(ticket => {
-                                return (
-                                        <mui.TableRow key={ticket.id}>
-                                            <mui.TableCell>{ticket.name}</mui.TableCell>
-                                            <mui.TableCell>{ticket.description}</mui.TableCell>
-                                            <mui.TableCell>{ticket.severityLevel}</mui.TableCell>
-                                            <mui.TableCell>{ticket.status}</mui.TableCell>
-                                            <mui.TableCell>{ticket.Employee}</mui.TableCell>
-                                            <mui.TableCell><mui.Button id={ticket.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
-                                            <mui.TableCell><mui.Button onClick={editTicket} disabled={disabled}><div id={ticket.id} data-name={ticket.name} data-descr={ticket.description}>Edit</div></mui.Button></mui.TableCell>
-                                        </mui.TableRow>
-                                                                        )
-                            })}
+                    {/* <div style={{ overflow: 'auto', height: '300px'}}> */}
+                    <mui.TableBody>
+                        {ticketsArray.map(ticket => {
+                            return (
+                                <mui.TableRow key={ticket.id}>
+                                    <mui.TableCell>{ticket.name}</mui.TableCell>
+                                    <mui.TableCell>{ticket.description}</mui.TableCell>
+                                    <mui.TableCell>{ticket.severityLevel}</mui.TableCell>
+                                    <mui.TableCell>{ticket.status}</mui.TableCell>
+                                    <mui.TableCell>{ticket.Employee}</mui.TableCell>
+                                    <mui.TableCell><mui.Button id={ticket.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
+                                    <mui.TableCell><mui.Button onClick={editTicket} disabled={disabled}><div id={ticket.id} data-name={ticket.name} data-descr={ticket.description}>Edit</div></mui.Button></mui.TableCell>
+                                </mui.TableRow>
+                            )
+                        })}
 
-                        </mui.TableBody>
-                    </mui.Table>
-                </div>
+                    </mui.TableBody>
+                    {/* </div> */}
+                </mui.Table>
             </mui.TableContainer>
         </>
     )

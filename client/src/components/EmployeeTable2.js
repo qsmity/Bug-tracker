@@ -34,30 +34,26 @@ const EmployeeTable2 = ({ employeesArray }) => {
         <>
             <mui.TableContainer >
                 <mui.Table>
-                <mui.TableHead>
-                            <mui.TableRow>
-                                <mui.TableCell>Employee</mui.TableCell>
-                                <mui.TableCell>Role</mui.TableCell>
-                                <mui.TableCell></mui.TableCell>
-                            </mui.TableRow>
-                        </mui.TableHead>
-                </mui.Table>
-                <div style={{ overflow: 'auto', height: '300px'}}>
-                    <mui.Table size="small" aria-label="a dense table">
-                        <mui.TableBody>
-                            {employeesArray.map(employee => {
-                                return (
-                                        <mui.TableRow key={employee.id}>
-                                            <mui.TableCell>{employee.name}</mui.TableCell>
-                                            <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
-                                            <mui.TableCell><mui.Button id={employee.id} onClick={deleteEmployee}>Delete</mui.Button></mui.TableCell>
-                                        </mui.TableRow>
-                                )
-                            })}
+                    <mui.TableHead>
+                        <mui.TableRow>
+                            <mui.TableCell>Employee</mui.TableCell>
+                            <mui.TableCell>Role</mui.TableCell>
+                            <mui.TableCell></mui.TableCell>
+                        </mui.TableRow>
+                    </mui.TableHead>
+                    <mui.TableBody>
+                        {employeesArray.map(employee => {
+                            return (
+                                <mui.TableRow key={employee.id}>
+                                    <mui.TableCell>{employee.name}</mui.TableCell>
+                                    <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
+                                    <mui.TableCell><mui.Button id={employee.id} onClick={deleteEmployee}>Delete</mui.Button></mui.TableCell>
+                                </mui.TableRow>
+                            )
+                        })}
 
-                        </mui.TableBody>
-                    </mui.Table>
-                </div>
+                    </mui.TableBody>
+                </mui.Table>
             </mui.TableContainer>
         </>
     )

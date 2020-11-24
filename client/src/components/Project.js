@@ -35,7 +35,7 @@ const Project = ({disabled}) => {
             </div>
         )
     } else {
-        return <h2>no projects found</h2>
+        return <h1 className='not-found'>No Projects Found</h1>
     }
 }
 

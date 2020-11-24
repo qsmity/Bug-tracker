@@ -6,15 +6,18 @@ import * as CgIcons from 'react-icons/cg'
 
 
 
-function Navbar() {
-    const [activeSidebar, setActiveSidebar] = useState(false)
-    const toggleSidebar = (e) => setActiveSidebar(!activeSidebar)
+function Navbar({ currentEmployee }) {
+
+    // const [activeSidebar, setActiveSidebar] = useState(false)
+    // const toggleSidebar = (e) => setActiveSidebar(!activeSidebar)
     return (
         <>
             <div className='navbar'>
-                <NavLink to='#' className='menu-bars'>
-                    <FaIcons.FaBars onClick={toggleSidebar} />
-                </NavLink>
+                <div>
+                    <p>Signed in as {currentEmployee.name}
+                        {/* <FaIcons.FaBars onClick={toggleSidebar} /> */}
+                    </p>
+                </div>
                 <div className='navbar__logo'>
                     <CgIcons.CgTrack className='menu-bars menu-bars--purple' />
                     <h1>Trackerfy</h1>
@@ -23,7 +26,7 @@ function Navbar() {
                     <LogoutButton />
                 </div>
             </div>
-            <nav className={activeSidebar ? 'nav-menu nav-menu--active' : 'nav-menu'}>
+            {/* <nav className={activeSidebar ? 'nav-menu nav-menu--active' : 'nav-menu'}>
                 <ul className='nav-menu__items' onClick={toggleSidebar}>
                     <li className='nav-menu__toggle'>
                         <NavLink to='#' className='nav-menu__close'>
@@ -37,7 +40,7 @@ function Navbar() {
                         <NavLink className='nav-menu__link' to='/admin/dashboard' >Dashboard</NavLink>
                     </li>
                 </ul>
-            </nav>
+            </nav> */}
         </>
     )
 }

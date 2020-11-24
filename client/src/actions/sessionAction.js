@@ -47,6 +47,7 @@ export const login = ( email, password ) => async (dispatch) => {
         const { employee } = await res.json()
 
         dispatch(loadSession(employee, token))
+        console.log('employee', employee)
     } catch (err){
         console.log(err)
         //enventually will push into errors array in store

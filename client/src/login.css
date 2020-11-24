@@ -7,7 +7,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
     font-size: 25px;
 }
 
@@ -40,7 +39,6 @@
     background-color: #3f51b5;
     margin-top: 100px;
     color: white;
-    font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: space-evenly;
     font-size: 25px;
@@ -91,7 +89,6 @@ div h4{
     margin: 0 auto;
     width: 50%;
     text-align: center;
-    font-family: 'Bangers', cursive, Helvetica, Arial, sans-serif;
     font-size: 25px;
 
 }

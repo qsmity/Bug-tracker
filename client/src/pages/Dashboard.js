@@ -7,7 +7,9 @@ import Navbar from '../components/Navbar'
 
 
 const Dashboard = () => {
-    const currentEmployeeRole = useSelector(state => state.session.role)
+    const currentEmployee = useSelector(state => state.session)
+    const currentEmployeeRole = currentEmployee.role
+
     const employees = useSelector(state => state.employees)
     const employeesArray = Object.values(employees)
 
@@ -28,22 +30,22 @@ const Dashboard = () => {
     return (
         <>
         <nav>
-          <Navbar/>
+          <Navbar currentEmployee={currentEmployee}/>
         </nav>
         <div>
-            {!currentEmployeeRole? <h2 style={{ marginTop: '10%', textAlign: 'center'}}>Wait To Be Assigned Role</h2> : null}
+            {!currentEmployeeRole? <h2 className='not-found to-be-assigned-message'>** Wait To Be Assigned Role **</h2> : null}
         </div>
         <div className='dashboard-grid'>
             <div className={employeesArray.length <= 0 ? 'dashboard-grid__component-employee dashboard-grid__component--hidden' : 'dashboard-grid__component-employee'}>
-                <div className='component__topbar'><h2>Employees</h2></div>
+                <div className='component__topbar'><h3>Employees</h3></div>
                 <Employee employeesArray={employeesArray} disabled={disabled}/>
             </div>
             <div className='dashboard-grid__component-project'>
-                <div className='component__topbar'><h2>Projects</h2></div>
+                <div className='component__topbar'><h3>Projects</h3></div>
                 <Project disabled={disabled}/>
             </div>
             <div className='dashboard-grid__component-ticket'>
-                <div className='component__topbar'><h2>Tickets</h2></div>
+                <div className='component__topbar'><h3>Tickets</h3></div>
                 <Ticket disabled={disabled}/>
             </div>
         </div>

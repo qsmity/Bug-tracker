@@ -43,7 +43,7 @@ const LoginForm = () => {
                 </div>
             </div>
             <div className='dashboard-grid__component-login login'>
-                <div className='component__topbar'>Login Here</div>
+                <div className='component__topbar'><h3>Login Here</h3></div>
                 <form className='login-form' onSubmit={loginUser}>
                     <mui.TextField id="standard-basic" label="Email" onChange={updateEmail} name='email' type='email' value={email} required />
                     <mui.TextField id="standard-basic" label="Password" onChange={updatePassword} name='password' type='password' value={password} required />

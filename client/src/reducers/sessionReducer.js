@@ -8,7 +8,7 @@ import {
     const sessionReducer = (state = {}, action) => {
         switch(action.type){
             case LOAD_SESSION: 
-                return Object.assign({}, { currentUserId: action.user.id, role: action.user.roleId, authToken: action.token })
+                return Object.assign({}, { currentUserId: action.user.id, role: action.user.roleId, authToken: action.token, name: action.user.name , email: action.user.email })
             case REMOVE_SESSION: 
                 return {}
             default: 

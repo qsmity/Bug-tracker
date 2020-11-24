@@ -5,9 +5,7 @@ import * as mui from '@material-ui/core';
 
 const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
     const dispatch = useDispatch()
-    // console.log('inside popup', ticketName, ticketDescr);
     const [name, setName] = useState(ticketName)
-    // const updateName = (e) => setName(e.target.value)
     const [description, setDescription] = useState(ticketDescr)
     const updateDescription = (e) => setDescription(e.target.value)
     const [severityLevel, setSeverityLevel] = useState('low')
@@ -39,7 +37,7 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
     return (
         <div className="edit-overlay">
             <div className='popup'>
-                <div className='component__topbar component__topbar--blue'> Edit Ticket </div>
+                <div className='component__topbar component__topbar--blue'><h3>Edit Ticket</h3></div>
                 <form onSubmit={addTicket} className='popup__form'>
                     <mui.Button variant='contained' onClick={close} className='close'>exit</mui.Button>
                     <mui.TextField disabled id="standard-required" label='Name' defaultValue={ticketName} />
