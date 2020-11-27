@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editTicket } from '../actions/ticketAction'
 import * as mui from '@material-ui/core';
 
-const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
+const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketSevLvl, ticketEmployeeId, ticketStatus }) => {
     const dispatch = useDispatch()
     const [name, setName] = useState(ticketName)
     const [description, setDescription] = useState(ticketDescr)
     const updateDescription = (e) => setDescription(e.target.value)
-    const [severityLevel, setSeverityLevel] = useState('low')
+    const [severityLevel, setSeverityLevel] = useState(ticketSevLvl)
     const updateSeverityLevel = (e) => setSeverityLevel(e.target.value)
-    const [status, setStatus] = useState('work in progress')
+    const [status, setStatus] = useState(ticketStatus)
     const updateStatus = (e) => setStatus(e.target.value)
     const [type, setType] = useState('bug/error')
     const updateType = (e) => setType(e.target.value)
-    const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
+    const [selectedEmployeeId, setSelectedEmployeeId] = useState(ticketEmployeeId)
     const selectedEmployee = (e) => setSelectedEmployeeId(e.target.value)
     const employees = useSelector(state => state.employees)
     const employeesArray = Object.values(employees)
@@ -33,10 +33,6 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
     const close = (e) => {
         hidePopup()
     }
-
-    useEffect( () => {
-
-    }, [ticketId])
 
     return (
         <div className="edit-overlay">

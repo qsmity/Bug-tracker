@@ -11,7 +11,12 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
         console.log(e.currentTarget.dataset.name)
         console.log(e.currentTarget.dataset.descr)
         console.log(e.currentTarget.id)
-        hidePopup(e.currentTarget.dataset.name, e.currentTarget.dataset.descr, e.currentTarget.id)
+        hidePopup(e.currentTarget.dataset.name,
+            e.currentTarget.dataset.descr,
+            e.currentTarget.id,
+            e.currentTarget.dataset.severitylevel,
+            e.currentTarget.dataset.status,
+            e.currentTarget.dataset.employeeid)
     }
 
     return (
@@ -38,12 +43,16 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                                     <mui.TableCell>{ticket.severityLevel}</mui.TableCell>
                                     <mui.TableCell>{ticket.status}</mui.TableCell>
                                     <mui.TableCell>{ticket.Employee}</mui.TableCell>
+                                    {/* adding the dataset onto the div to populate the modal with selected ticket to edit */}
                                     <mui.TableCell>
-                                        <div className='edit-icon-container' onClick={editTicket} 
-                                         id={ticket.id}
-                                         data-name={ticket.name}
-                                         data-descr={ticket.description}
-                                         disabled={disabled}
+                                        <div className='edit-icon-container' onClick={editTicket}
+                                            id={ticket.id}
+                                            data-name={ticket.name}
+                                            data-descr={ticket.description}
+                                            data-severitylevel={ticket.severityLevel}
+                                            data-status={ticket.status}
+                                            data-employeeid={ticket.employeeId}
+                                            disabled={disabled}
                                         >
                                             <FiIcons.FiEdit2
                                                 className='edit-icon'

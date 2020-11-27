@@ -14,22 +14,28 @@ const Ticket = ({ disabled }) => {
     const [ticketName, setTicketName] = useState('hello')
     const [ticketDescr, setTicketDescr] = useState('goodbye')
     const [ticketId, setTicketId] = useState('')
+    const [ticketSeverityLevel, setTicketSeverityLevel] = useState('')
+    const [ticketStatus, setTicketStatus] = useState('')
+    const [ticketEmployeeId, setTicketEmployeeId] = useState('')
 
     //hidden state for edit ticket popup
     const [isHidden, setIsHidden] = useState(true)
-    
+
     //edit button will pass  necessary ticket info nested in the edit button dataset attribute, onclick
-    const hidePopup = (ticketNamePopup, ticketDescrPopup, ticketId) => {
-        
-        if(isHidden === true){
+    const hidePopup = (ticketNamePopup, ticketDescrPopup, ticketId, ticketSevLvlPopup, ticketStatusPopup, ticketEmployeeIdPopup) => {
+
+        if (isHidden === true) {
             setIsHidden(false)
             setTicketName(ticketNamePopup)
             setTicketDescr(ticketDescrPopup)
             setTicketId(ticketId)
+            setTicketSeverityLevel(ticketSevLvlPopup)
+            setTicketStatus(ticketStatusPopup)
+            setTicketEmployeeId(ticketEmployeeIdPopup)
         } else {
             setIsHidden(true)
         }
-        
+
     }
 
     useEffect(() => {
@@ -42,7 +48,14 @@ const Ticket = ({ disabled }) => {
                 <div>
                     <TicketTable hidePopup={hidePopup} disabled={disabled} ticketsArray={ticketsArray} />
                 </div>
-                { !isHidden ? <EditTicketPopup ticketId={ticketId} ticketName={ticketName} ticketDescr={ticketDescr} hidePopup={hidePopup} /> : null}
+                { !isHidden ? <EditTicketPopup
+                    ticketId={ticketId}
+                    ticketName={ticketName}
+                    ticketDescr={ticketDescr}
+                    ticketSevLvl={ticketSeverityLevel}
+                    ticketEmployeeId={ticketEmployeeId}
+                    ticketStatus={ticketStatus}
+                    hidePopup={hidePopup} /> : null}
             </div>
         )
     } else {
