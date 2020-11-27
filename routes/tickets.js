@@ -107,55 +107,57 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     const parsedEmployeeId = parseInt(employeeId, 10)
     //find project in db to update
 
-    console.log(employeeId);
-    if (permissionAdmin.granted) {
-        //not updating project id because ticket is created for one specific proj
-        await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
-            where: {
-                id: ticketId
+    console.log('employeeId ===========',employeeId);
+    try{
+        if (permissionAdmin.granted) {
+            //not updating project id because ticket is created for one specific proj
+            await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
+                where: {
+                    id: ticketId
+                }
             }
+            )
+    
+            const ticket = await Ticket.findOne({
+                include: [Employee],
+                where: {
+                    id: ticketId
+                }
+            })
+    
+    
+            res.status(201)
+            res.json({ ticket })
+    
+            //only update status if dev role
+        } else if (permissionDev.granted) {
+            await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
+                where: {
+                    id: ticketId
+                }
+            }
+            )
+    
+            const ticket = await Ticket.findOne({
+                include: [Employee],
+                where: {
+                    id: ticketId
+                }
+            })
+    
+            res.status(201)
+            res.json({ updatedTicket })
+        } else {
+            const err = new Error('permission denied')
+            err.title = 'permission denied'
+            err.status = 401
+            err.errors = ['role not permitted to create resource']
+            next(err)
         }
-        )
-
-        const ticket = await Ticket.findOne({
-            include: [Employee],
-            where: {
-                id: ticketId
-            }
-        })
-
-
-        res.status(201)
-        res.json({ ticket })
-
-        //only update status if dev role
-    } else if (permissionDev.granted) {
-        await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
-            where: {
-                id: ticketId
-            }
-        }
-        )
-
-        const ticket = await Ticket.findOne({
-            include: [Employee],
-            where: {
-                id: ticketId
-            }
-        })
-
-        res.status(201)
-        res.json({ updatedTicket })
-    } else {
-        const err = new Error('permission denied')
-        err.title = 'permission denied'
-        err.status = 401
-        err.errors = ['role not permitted to create resource']
-        next(err)
+    }catch(e){
+        console.log(e);
     }
-
-
-
+    
 }))
 
 

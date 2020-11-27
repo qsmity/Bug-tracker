@@ -49,6 +49,7 @@ const ProjectTable = ({ projectsArray, disabled }) => {
 
                                         </ul>
                                     </mui.TableCell>
+                                    {/* to do add edit functionality */}
                                     <mui.TableCell><FiIcons.FiEdit2 className='edit-icon' disabled={disabled} onClick={(e) => console.log('hello')} />
                                     </mui.TableCell>
                                     <mui.TableCell><mui.Button id={project.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>

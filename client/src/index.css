@@ -6,6 +6,10 @@ body {
   font-size: 16px;
   font-family: 'Roboto Slab', serif, Arial, sans-serif;
   background-color: rgba(218, 214, 214, 0.37);
+  /* both are important because material ui changes the padding and overflow when a select is clicked
+  which causes the entire viewport to shift. This corrects that issue */
+  overflow: visible !important;
+  padding: 0 !important
 }
 
 .dashboard-grid{
@@ -54,13 +58,23 @@ body {
 .employee-form{
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 50%;
   margin: 10% auto;  
+  height: 50%;
+
 }
+/* .popup__form{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 70%;
+  height: 85%;
+  justify-content: space-between;
+  } */
 
 .employee-form button{
-  width: 90px;
-  margin: 10px auto;
+  /* width: 90px; */
+  margin: 10px 0;
 }
 
 .add-proj-form{
@@ -137,13 +151,18 @@ body {
 }
 
 /* modal logic */
-.close:hover{
+.edit-ticket-close:hover, .edit-employee-close:hover{
   color: cyan
 }
 
-.close{
+.edit-ticket-close{
   cursor: pointer;
   align-self: flex-end;
+}
+
+.edit-employee-close {
+  position: absolute;
+  left: 20%
 }
 
 .hidden{
@@ -194,9 +213,23 @@ Button:disabled{
   background-color: darkgray;
 }
 
-.edit-icon:hover{
+
+/* icon logic */
+.edit-icon:hover, .delete-icon:hover{
   cursor: pointer;
 }
+
+/* svg {
+  position: relative;
+  z-index: 1;
+  height: 20px;
+  width: 20px;
+}
+
+path {
+  display: none;
+} */
+
 
 .not-found {
   color: grey

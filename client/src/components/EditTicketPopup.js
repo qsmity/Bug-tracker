@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editTicket } from '../actions/ticketAction'
 import * as mui from '@material-ui/core';
@@ -34,12 +34,16 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
         hidePopup()
     }
 
+    useEffect( () => {
+
+    }, [ticketId])
+
     return (
         <div className="edit-overlay">
             <div className='popup'>
                 <div className='component__topbar component__topbar--blue'><h3>Edit Ticket</h3></div>
                 <form onSubmit={addTicket} className='popup__form'>
-                    <mui.Button variant='contained' onClick={close} className='close'>exit</mui.Button>
+                    <mui.Button variant='contained' onClick={close} className='edit-ticket-close'>exit</mui.Button>
                     <mui.TextField disabled id="standard-required" label='Name' defaultValue={ticketName} />
                     <mui.TextField onChange={updateDescription} rowsMax={4} label='description' id='standard-multiline-flexible' value={description} multiline />
                     <mui.InputLabel id="demo-simple-select-label">Severity Level</mui.InputLabel>
@@ -54,12 +58,12 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
                         <mui.MenuItem value='completed'>Completed</mui.MenuItem>
                     </mui.Select>
                     <mui.InputLabel id="demo-simple-select-label">Type</mui.InputLabel>
-                    <mui.Select LabelId='demo-simple-select-label' id='type' onChange={updateType} value={type}>
+                    <mui.Select labelId='demo-simple-select-label' id='type' onChange={updateType} value={type}>
                         <mui.MenuItem value='bug/error'>Bug/Error</mui.MenuItem>
                         <mui.MenuItem value='task'>Task</mui.MenuItem>
                     </mui.Select>
                     <mui.InputLabel id="demo-simple-select-label">Add Employee</mui.InputLabel>
-                    <mui.Select LabelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' value={selectedEmployeeId}>
+                    <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' value={selectedEmployeeId} required>
                         <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
                         {employeesArray.map(employee => (
                             <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
