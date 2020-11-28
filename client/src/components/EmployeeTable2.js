@@ -2,8 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import * as employeeAction from '../actions/employeeAction'
 import * as mui from '@material-ui/core';
-
-
+import * as IoIcons from 'react-icons/io'
 
 const EmployeeTable2 = ({ employeesArray }) => {
     const dispatch = useDispatch()
@@ -47,7 +46,15 @@ const EmployeeTable2 = ({ employeesArray }) => {
                                 <mui.TableRow key={employee.id}>
                                     <mui.TableCell>{employee.name}</mui.TableCell>
                                     <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
-                                    <mui.TableCell><mui.Button id={employee.id} onClick={deleteEmployee}>Delete</mui.Button></mui.TableCell>
+                                    <mui.TableCell>
+                                        <IoIcons.IoIosTrash
+                                            className='delete-icon'
+                                            id={employee.id}
+                                            onClick={deleteEmployee}
+                                            size='24'>
+                                            Delete
+                                            </IoIcons.IoIosTrash>
+                                    </mui.TableCell>
                                 </mui.TableRow>
                             )
                         })}

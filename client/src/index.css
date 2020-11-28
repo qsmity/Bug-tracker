@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;600;800;900&display=swap');
 
 body {
@@ -217,6 +216,10 @@ Button:disabled{
 /* icon logic */
 .edit-icon:hover, .delete-icon:hover{
   cursor: pointer;
+}
+
+.delete-icon {
+  color: rgba(128, 128, 128, 0.726)
 }
 
 /* svg {

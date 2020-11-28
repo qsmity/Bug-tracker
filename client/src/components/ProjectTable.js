@@ -1,7 +1,7 @@
 import React from 'react'
 import * as mui from '@material-ui/core';
 import * as FiIcons from 'react-icons/fi'
-
+import * as IoIcons from 'react-icons/io'
 
 const ProjectTable = ({ projectsArray, disabled }) => {
     return (
@@ -52,7 +52,16 @@ const ProjectTable = ({ projectsArray, disabled }) => {
                                     {/* to do add edit functionality */}
                                     <mui.TableCell><FiIcons.FiEdit2 className='edit-icon' disabled={disabled} onClick={(e) => console.log('hello')} />
                                     </mui.TableCell>
-                                    <mui.TableCell><mui.Button id={project.id} disabled={disabled}>Delete</mui.Button></mui.TableCell>
+                                    <mui.TableCell>
+                                        <IoIcons.IoIosTrash
+                                            className='delete-icon'
+                                            id={project.id}
+                                            disabled={disabled}
+                                            onClick={e => console.log('delete')}
+                                            size='24'>
+                                            Delete
+                                            </IoIcons.IoIosTrash>
+                                    </mui.TableCell>
                                 </mui.TableRow>)
                         })}
 
