@@ -26,7 +26,7 @@ const EmployeeTable2 = ({ employeesArray, disabled }) => {
 
     const deleteEmployee = (e) => {
         //if disabled (no permissions) alert action is not permitted
-        if(disabled){
+        if (disabled) {
             alert('Not permitted to delete employees')
         } else {
             if (window.confirm('Are you sure you wish to delete this item?')) {
@@ -44,31 +44,35 @@ const EmployeeTable2 = ({ employeesArray, disabled }) => {
                     <mui.TableHead>
                         <mui.TableRow>
                             <mui.TableCell>Employee</mui.TableCell>
-                            <mui.TableCell>Role</mui.TableCell>
+                            <mui.TableCell style={{paddingRight: '125px'}}>Role</mui.TableCell>
                             <mui.TableCell></mui.TableCell>
                         </mui.TableRow>
                     </mui.TableHead>
-                    <mui.TableBody>
-                        {employeesArray.map(employee => {
-                            return (
-                                <mui.TableRow key={employee.id}>
-                                    <mui.TableCell>{employee.name}</mui.TableCell>
-                                    <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
-                                    <mui.TableCell>
-                                        <IoIcons.IoIosTrash
-                                            className='delete-icon'
-                                            id={employee.id}
-                                            onClick={deleteEmployee}
-                                            size='24'>
-                                            Delete
-                                            </IoIcons.IoIosTrash>
-                                    </mui.TableCell>
-                                </mui.TableRow>
-                            )
-                        })}
-
-                    </mui.TableBody>
                 </mui.Table>
+                <div className='table-container' style={{ overflow: 'auto', height: '400px' }}>
+                    <mui.Table>
+                        <mui.TableBody>
+                            {employeesArray.map(employee => {
+                                return (
+                                    <mui.TableRow key={employee.id}>
+                                        <mui.TableCell>{employee.name}</mui.TableCell>
+                                        <mui.TableCell>{mapRoleIdToName(employee.roleId)}</mui.TableCell>
+                                        <mui.TableCell>
+                                            <IoIcons.IoIosTrash
+                                                className='delete-icon'
+                                                id={employee.id}
+                                                onClick={deleteEmployee}
+                                                size='24'>
+                                                Delete
+                                            </IoIcons.IoIosTrash>
+                                        </mui.TableCell>
+                                    </mui.TableRow>
+                                )
+                            })}
+
+                        </mui.TableBody>
+                    </mui.Table>
+                </div>
             </mui.TableContainer>
         </>
     )

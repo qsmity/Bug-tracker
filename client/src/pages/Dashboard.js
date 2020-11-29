@@ -46,7 +46,7 @@ const Dashboard = () => {
             </div>
             <div className='dashboard-grid__component-ticket'>
                 <div className='component__topbar'><h3>Tickets</h3></div>
-                <Ticket disabled={disabled}/>
+                <Ticket disabled={disabled} currentEmployeeRole={currentEmployeeRole}/>
             </div>
         </div>
     </>

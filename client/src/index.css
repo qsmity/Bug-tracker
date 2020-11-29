@@ -53,7 +53,7 @@ body {
 
 /* employee card */
 .dashboard-grid__component-employee{
-  height: 650px;
+  height: 550px;
   width: 90%;
   margin: 10px auto; 
   text-align: center;
@@ -107,15 +107,12 @@ body {
   height: 50%;
 }
 
-.project-table-container {
-  overflow: hidden;
-}
 
 /* ticket card */
 .dashboard-grid__component-ticket{
   grid-area: ticket;
-  height: 425px;
-  width: 90%;
+  height: 550px;
+  width: 95%;
   margin: 10px auto; 
   text-align: center;
   box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
@@ -149,7 +146,10 @@ body {
 
 .component__topbar h3{
   transform: skew(-5deg);
+}
 
+.table-container {
+  overflow: hidden;
 }
 
 /* modal logic */

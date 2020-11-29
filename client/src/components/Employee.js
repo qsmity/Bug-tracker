@@ -28,8 +28,8 @@ const Employee = ({ employeesArray, disabled }) => {
     if (employeesArray.length > 0) {
         return (
             <div>
+                <mui.Button variant='contained' disabled={disabled} onClick={hidePopup} type='click'>Edit Employee</mui.Button>
                 <EmployeeTable2 employeesArray={employeesArray} disabled={disabled}/>
-                <mui.Button variant='contained' onClick={hidePopup} type='click'>Edit Employee</mui.Button>
                 { !isHidden ? <EditEmployeePopup hidePopup={hidePopup} /> : null}
 
             </div>

@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getTickets } from '../actions/ticketAction'
 import EditTicketPopup from './EditTicketPopup'
 import TicketTable from './TicketTable'
+import * as mui from '@material-ui/core';
 
-
-const Ticket = ({ disabled }) => {
+const Ticket = ({ disabled, currentEmployeeRole }) => {
     const dispatch = useDispatch()
     const tickets = useSelector(state => state.tickets)
     const ticketsArray = Object.values(tickets)
@@ -46,6 +46,12 @@ const Ticket = ({ disabled }) => {
         return (
             <div className='ticket'>
                 <div>
+                    {/* if user is submitter permit to add ticket (remove disabled boolean) */}
+                    {currentEmployeeRole === 4 ?
+                        <mui.Button variant='contained' type='click'>Add Ticket</mui.Button>
+                        :
+                        <mui.Button variant='contained' disabled={disabled} type='click'>Add Ticket</mui.Button>
+                    }
                     <TicketTable hidePopup={hidePopup} disabled={disabled} ticketsArray={ticketsArray} />
                 </div>
                 { !isHidden ? <EditTicketPopup
