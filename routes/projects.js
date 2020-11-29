@@ -49,6 +49,9 @@ let grantsObject = {
             'read:any': ['*'],
             'delete:any': ['*'],
             'update:own': ['employeeId'],
+        },
+        employees: {
+            'read:any': ['*']
         }
     },
     3: {

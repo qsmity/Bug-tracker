@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as mui from '@material-ui/core';
 import * as FiIcons from 'react-icons/fi'
 import * as IoIcons from 'react-icons/io'
@@ -19,6 +19,10 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
             e.currentTarget.dataset.status,
             e.currentTarget.dataset.employeeid)
     }
+
+    useEffect( () => {
+
+    }, [ticketsArray])
 
     const deleteTicket = (e) => {
         //if disabled is true, don't allow unauthorized user to delete ticket

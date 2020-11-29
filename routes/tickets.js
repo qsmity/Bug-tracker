@@ -157,7 +157,7 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
             })
 
             res.status(201)
-            res.json({ updatedTicket })
+            res.json({ ticket })
         } else {
             const err = new Error('permission denied')
             err.title = 'permission denied'

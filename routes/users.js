@@ -38,7 +38,7 @@ const validateEmailAndPassword = [
     res.json({ employee })
   }))
 
-//get all users in db for admin role
+//get all users in db for admin and project manager role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     const role = req.user.role
     if(!role){
@@ -50,9 +50,11 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
        return next(err)
     }
     const permissionAdmin = ac.can(`${role}`).readAny('employees')
+    const permissionProjectManager = ac.can(`${role}`).readAny('employees')
+    
     console.log(permissionAdmin.granted)
 
-    if(permissionAdmin.granted){
+    if(permissionAdmin.granted || permissionProjectManager.granted){
         const employees = await Employee.findAll({
             where: {
                 id: {

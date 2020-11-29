@@ -18,6 +18,7 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketS
     const selectedEmployee = (e) => setSelectedEmployeeId(e.target.value)
     const employees = useSelector(state => state.employees)
     const employeesArray = Object.values(employees)
+    const roleId = useSelector(state => state.session.role)
 
     //handle submit 
     const addTicket = (e) => {
@@ -41,31 +42,49 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketS
                 <form onSubmit={addTicket} className='popup__form'>
                     <mui.Button variant='contained' onClick={close} className='edit-ticket-close'>exit</mui.Button>
                     <mui.TextField disabled id="standard-required" label='Name' defaultValue={ticketName} />
-                    <mui.TextField onChange={updateDescription} rowsMax={4} label='description' id='standard-multiline-flexible' value={description} multiline />
-                    <mui.InputLabel id="demo-simple-select-label">Severity Level</mui.InputLabel>
-                    <mui.Select labelId="demo-simple-select-label" id='severityLevel' onChange={updateSeverityLevel} value={severityLevel}>
-                        <mui.MenuItem value='low'>Low</mui.MenuItem>
-                        <mui.MenuItem value='medium'>Medium</mui.MenuItem>
-                        <mui.MenuItem value='high'>High</mui.MenuItem>
-                    </mui.Select >
-                    <mui.InputLabel id="demo-simple-select-label">Status</mui.InputLabel>
-                    <mui.Select labelId="demo-simple-select-label" id='status' onChange={updateStatus} value={status}>
-                        <mui.MenuItem value='work in progress'>Work In Progress</mui.MenuItem>
-                        <mui.MenuItem value='completed'>Completed</mui.MenuItem>
-                    </mui.Select>
-                    <mui.InputLabel id="demo-simple-select-label">Type</mui.InputLabel>
-                    <mui.Select labelId='demo-simple-select-label' id='type' onChange={updateType} value={type}>
-                        <mui.MenuItem value='bug/error'>Bug/Error</mui.MenuItem>
-                        <mui.MenuItem value='task'>Task</mui.MenuItem>
-                    </mui.Select>
+                    <mui.TextField onChange={updateDescription} rowsMax={4} disabled label='description' id='standard-multiline-flexible' value={description} multiline />
+
+                    {/* if user is project manager only allow to edit employee severity level */}
+                    {roleId === 2 ?
+                        <>
+                            <mui.TextField disabled id="standard-required" label='Severity Level' defaultValue={ticketName} />
+                            <mui.InputLabel id="demo-simple-select-label">Status</mui.InputLabel>
+                            <mui.Select labelId="demo-simple-select-label" id='status' onChange={updateStatus} value={status}>
+                                <mui.MenuItem value='work in progress'>Work In Progress</mui.MenuItem>
+                                <mui.MenuItem value='completed'>Completed</mui.MenuItem>
+                            </mui.Select>
+                            <mui.TextField disabled id="standard-required" label='type' defaultValue={type} />
+                        </>
+                        :
+                        <>
+                            <mui.InputLabel id="demo-simple-select-label">Severity Level</mui.InputLabel>
+                            <mui.Select labelId="demo-simple-select-label" id='severityLevel' onChange={updateSeverityLevel} value={severityLevel}>
+                                <mui.MenuItem value='low'>Low</mui.MenuItem>
+                                <mui.MenuItem value='medium'>Medium</mui.MenuItem>
+                                <mui.MenuItem value='high'>High</mui.MenuItem>
+                            </mui.Select >
+                            <mui.InputLabel id="demo-simple-select-label">Status</mui.InputLabel>
+                            <mui.Select labelId="demo-simple-select-label" id='status' onChange={updateStatus} value={status}>
+                                <mui.MenuItem value='work in progress'>Work In Progress</mui.MenuItem>
+                                <mui.MenuItem value='completed'>Completed</mui.MenuItem>
+                            </mui.Select>
+                            <mui.InputLabel id="demo-simple-select-label">Type</mui.InputLabel>
+                            <mui.Select labelId='demo-simple-select-label' id='type' onChange={updateType} value={type}>
+                                <mui.MenuItem value='bug/error'>Bug/Error</mui.MenuItem>
+                                <mui.MenuItem value='task'>Task</mui.MenuItem>
+                            </mui.Select>
+                        </>
+                    }
+
                     <mui.InputLabel id="demo-simple-select-label">Add/Edit Employee</mui.InputLabel>
-                    <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' value={selectedEmployeeId} required>
+                    <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={selectedEmployeeId} value={selectedEmployeeId} required>
                         <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
                         {employeesArray.map(employee => (
                             <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
 
                         ))
                         }
+
                     </mui.Select>
                     <mui.Button variant='contained' type='submit'>Add</mui.Button>
                 </form>

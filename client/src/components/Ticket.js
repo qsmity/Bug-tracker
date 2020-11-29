@@ -40,7 +40,7 @@ const Ticket = ({ disabled }) => {
 
     useEffect(() => {
         dispatch(getTickets())
-    }, [dispatch])
+    }, [])
 
     if (ticketsArray.length > 0) {
         return (
