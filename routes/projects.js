@@ -43,7 +43,7 @@ let grantsObject = {
     2: {
         tickets: {
             'read:any': ['*'],
-            'update:own': ['severityLevel', 'status'],
+            'update:any': ['severityLevel', 'status'],
         },
         projects: {
             'read:any': ['*'],
@@ -81,7 +81,6 @@ const router = express.Router()
 
 //get all projects in db based on role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
-    console.log(req.user.role)
     //req.user.role is set in the requireAuth middleware
     const role = req.user.role
     if (role) {
@@ -135,7 +134,6 @@ router.post('/',
 
         //grab employee id's from employeeIdArray sent to associate employee with project created
         const { name, description, employeeIdArray } = req.body
-        console.log('in projects backend', employeeIdArray)
         let project;
         if (permissionAdmin.granted) {
             project = await Project.create({ name, description })
@@ -212,6 +210,7 @@ router.put('/',
     }))
 
 
+//export grant objects for permissions to be accessed in other routes
 module.exports = {
     projectsRouter: router,
     grantsObject,

@@ -32,7 +32,6 @@ const AddProjectPopup = ({ hidePopup }) => {
     const selectedEmployee = (e) => setSelectedEmployeeId(e.target.value)
 
     // handle submit 
-    //name, descr, employee id
     const addProject = (e) => {
         e.preventDefault()
         dispatch(createProject(name, description, selectedEmployeeId))
@@ -72,7 +71,6 @@ const AddProjectPopup = ({ hidePopup }) => {
                     </div>
                     <div>
                         <mui.Button variant='contained' type='submit'>Add</mui.Button>
-
                     </div>
                 </form>
             </div>

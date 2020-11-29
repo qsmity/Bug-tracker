@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTickets } from '../actions/ticketAction'
 import EditTicketPopup from './EditTicketPopup'
+import AddTicketPopup from './AddTicketPopup'
 import TicketTable from './TicketTable'
 import * as mui from '@material-ui/core';
 
@@ -19,13 +20,16 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
     const [ticketEmployeeId, setTicketEmployeeId] = useState('')
 
     //hidden state for edit ticket popup
-    const [isHidden, setIsHidden] = useState(true)
+    const [isEditTicketHidden, setIsEditTicketHidden] = useState(true)
 
-    //edit button will pass  necessary ticket info nested in the edit button dataset attribute, onclick
-    const hidePopup = (ticketNamePopup, ticketDescrPopup, ticketId, ticketSevLvlPopup, ticketStatusPopup, ticketEmployeeIdPopup) => {
+    //hidden state for add ticket popup
+    const [isAddTicketHidden, setIsAddTicketHidden] = useState(true)
 
-        if (isHidden === true) {
-            setIsHidden(false)
+    //edit button will pass necessary ticket info nested in the edit button dataset attribute, onclick
+    const hideEditTicketPopup = (ticketNamePopup, ticketDescrPopup, ticketId, ticketSevLvlPopup, ticketStatusPopup, ticketEmployeeIdPopup) => {
+
+        if (isEditTicketHidden === true) {
+            setIsEditTicketHidden(false)
             setTicketName(ticketNamePopup)
             setTicketDescr(ticketDescrPopup)
             setTicketId(ticketId)
@@ -33,7 +37,17 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
             setTicketStatus(ticketStatusPopup)
             setTicketEmployeeId(ticketEmployeeIdPopup)
         } else {
-            setIsHidden(true)
+            setIsEditTicketHidden(true)
+        }
+
+    }
+
+    //open and close add ticket popup logic
+    const hideAddTicketPopup = () => {
+        if (isAddTicketHidden === true) {
+            setIsAddTicketHidden(false)
+        } else {
+            setIsAddTicketHidden(true)
         }
 
     }
@@ -46,22 +60,25 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
         return (
             <div className='ticket'>
                 <div>
-                    {/* if user is submitter permit to add ticket (remove disabled boolean) */}
-                    {currentEmployeeRole === 4 ?
-                        <mui.Button variant='contained' type='click'>Add Ticket</mui.Button>
+                    {/* if user is submitter or admin permit to add ticket (remove disabled boolean) */}
+                    {currentEmployeeRole === 4 || currentEmployeeRole === 1 ?
+                        <mui.Button variant='contained' onClick={hideAddTicketPopup}>Add Ticket</mui.Button>
                         :
                         <mui.Button variant='contained' disabled={disabled} type='click'>Add Ticket</mui.Button>
                     }
-                    <TicketTable hidePopup={hidePopup} disabled={disabled} ticketsArray={ticketsArray} />
+                    <TicketTable hideEditTicketPopup={hideEditTicketPopup} disabled={disabled} ticketsArray={ticketsArray} />
                 </div>
-                { !isHidden ? <EditTicketPopup
+
+                { !isEditTicketHidden ? <EditTicketPopup
                     ticketId={ticketId}
                     ticketName={ticketName}
                     ticketDescr={ticketDescr}
                     ticketSevLvl={ticketSeverityLevel}
                     ticketEmployeeId={ticketEmployeeId}
                     ticketStatus={ticketStatus}
-                    hidePopup={hidePopup} /> : null}
+                    hideEditTicketPopup={hideEditTicketPopup} /> : null}
+
+                { !isAddTicketHidden ? <AddTicketPopup hideAddTicketPopup={hideAddTicketPopup} /> : null}
             </div>
         )
     } else {

@@ -17,9 +17,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(200)
       },
-      comments: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

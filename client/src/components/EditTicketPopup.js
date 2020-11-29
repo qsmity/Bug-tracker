@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editTicket } from '../actions/ticketAction'
 import * as mui from '@material-ui/core';
 
-const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketSevLvl, ticketEmployeeId, ticketStatus }) => {
+const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketId, ticketSevLvl, ticketEmployeeId, ticketStatus }) => {
     const dispatch = useDispatch()
 
     const [name, setName] = useState(ticketName)
@@ -38,12 +38,12 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketS
         console.log('in popup', name, description, severityLevel, status, type, ticketId, selectedEmployeeId)
         setName('')
         setDescription('')
-        hidePopup()
+        hideEditTicketPopup()
     }
 
     //handle close click
     const close = (e) => {
-        hidePopup()
+        hideEditTicketPopup()
     }
 
     // if user is project manager only allow to edit employee and severity level

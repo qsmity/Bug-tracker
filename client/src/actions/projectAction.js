@@ -9,10 +9,10 @@ const loadProjects = (projects) => ({
     projects
 })
 
-const addProject = (project) => ({
-    type: ADD_PROJECT,
-    project
-})
+// const addProject = (project) => ({
+//     type: ADD_PROJECT,
+//     project
+// })
 
 export const removeProjects = () => ({
     type: REMOVE_PROJECTS

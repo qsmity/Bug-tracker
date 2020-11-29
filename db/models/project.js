@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       allowNull: false,
       type: DataTypes.STRING(200)
-    },
-    comments: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
     }
   }, {});
   Project.associate = function(models) {

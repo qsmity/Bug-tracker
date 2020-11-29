@@ -5,14 +5,14 @@ import * as IoIcons from 'react-icons/io'
 import * as TicketActions from '../actions/ticketAction'
 import { useDispatch, useSelector } from 'react-redux'
 
-const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
+const TicketTable = ({ ticketsArray, disabled, hideEditTicketPopup }) => {
     const dispatch = useDispatch()
 
     const roleId = useSelector(state => state.session.role)
 
     //handle edit click
     const editTicket = (e) => {
-        hidePopup(e.currentTarget.dataset.name,
+        hideEditTicketPopup(e.currentTarget.dataset.name,
             e.currentTarget.dataset.descr,
             e.currentTarget.id,
             e.currentTarget.dataset.severitylevel,

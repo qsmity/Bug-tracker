@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     employeeId: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER
     }
   }, {});

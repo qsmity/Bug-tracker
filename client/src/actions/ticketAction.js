@@ -2,6 +2,7 @@ export const LOAD_TICKETS = 'LOAD_TICKETS'
 export const REMOVE_TICKETS = 'REMOVE_TICKETS'
 export const REMOVE_ONE_TICKET = 'REMOVE_ONE_TICKET'
 export const UPDATE_TICKET = 'UPDATE_TICKET'
+export const ADD_TICKET = 'ADD_TICKET'
 
 
 //actions
@@ -20,16 +21,20 @@ export const removeOneTicket = (ticketId) => ({
     ticketId
 })
 
-
 export const removeTickets = () => ({
     type: REMOVE_TICKETS
+})
+
+const addTicket = (ticket) => ({
+    type: ADD_TICKET,
+    ticket
 })
 
 export const getTickets = () => async (dispatch) => {
     try {
         const res = await fetch('/api/tickets')
 
-        if(!res.ok){    
+        if (!res.ok) {
             throw res
         }
         const { tickets } = await res.json()
@@ -39,7 +44,46 @@ export const getTickets = () => async (dispatch) => {
         console.log(err)
         //enventually will push into errors array in store
     }
-} 
+}
+
+export const createTicket = (name,
+    description,
+    severityLevel,
+    status,
+    type,
+    projectId) => async (dispatch) => {
+
+        const body = {
+            name,
+            description,
+            severityLevel,
+            status,
+            type,
+            projectId
+        }
+
+        try {
+            const res = await fetch('/api/tickets', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+
+            if (!res.ok) {
+                throw res
+            }
+
+            const { ticket } = await res.json()
+            console.log('inside createticket thunk', ticket)
+            dispatch(addTicket(ticket))
+        } catch (err) {
+            console.log(err)
+            //enventually will push into errors array in store
+        }
+
+    }
 
 export const editTicket = (name, description, severityLevel, status, type, employeeId, ticketId) => async (dispatch) => {
     //manually making array. git rid of this when multi select created for form
@@ -49,20 +93,20 @@ export const editTicket = (name, description, severityLevel, status, type, emplo
         description,
         severityLevel,
         type,
-        status, 
+        status,
         employeeId
     }
 
     try {
         const res = await fetch(`/api/tickets/${ticketId}`, {
-            method: 'PUT', 
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
         })
 
-        if(!res.ok){    
+        if (!res.ok) {
             throw res
         }
         const { ticket } = await res.json()

@@ -66,33 +66,42 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 
 }))
 
-// create project (admin role)
+// create ticket (admin and submitter)
 router.post('/', requireAuth,
     asyncHandler(async (req, res, next) => {
 
         const role = req.user.role
         const permissionAdmin = ac.can(`${role}`).createAny('tickets')
+        const permissionSubmitter = ac.can(`${role}`).createAny('tickets')
 
         //grab employee id's from employeeIdArray sent to associate employee with project created
-        const { name, description, employeeIdArray } = req.body
+        const { name,
+            description,
+            severityLevel,
+            status, 
+            type,
+            projectId} = req.body
+        
+        const parsedProjectId = parseInt(projectId, 10)
 
-        let project;
-        if (permissionAdmin.granted) {
-            if (!employeeIdArray) {
-                project = await Project.create({ name, description })
-            } else {
-                project = await Project.create({ name, description })
+        let ticket;
+        if (permissionAdmin.granted || permissionSubmitter.granted) {
+            ticket = await Ticket.create({
+                name,
+                description,
+                severityLevel,
+                status,
+                type,
+                projectId: parsedProjectId
+            })
 
-                //map over array to add association for each employee
-                employeeIdArray.map(async id => {
-                    //find employee in db
-                    const employee = await Employee.findByPk(id)
-                    //add association to project
-                    project.addEmployee(employee)
-                })
-            }
+            //add project association to ticket
+            const project = await Project.findByPk(projectId)
+            ticket.addProject(project)
+
+
             res.status(201)
-            res.json({ project })
+            res.json({ ticket })
 
         } else {
             const err = new Error('permission denied')
@@ -105,11 +114,12 @@ router.post('/', requireAuth,
 
     }))
 
-//edit ticket (admin - all fields), (dev - status level)
+//edit ticket (admin - all fields), (dev - status level), (project manager - severity level and employee)
 router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     const ticketId = parseInt(req.params.ticketId, 10)
     const role = req.user.role
     const permissionAdmin = ac.can(`${role}`).updateAny('tickets')
+    const permissionProjectManager = ac.can(`${role}`).updateAny('tickets')
     const permissionDev = ac.can(`${role}`).updateOwn('tickets')
 
     //grab employee id's from employeeIdArray sent to associate employee with project created
@@ -118,7 +128,7 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     const parsedEmployeeId = parseInt(employeeId, 10)
     //find project in db to update
 
-    console.log('employeeId ===========', employeeId);
+    let ticket;
     try {
         if (permissionAdmin.granted) {
             //not updating project id because ticket is created for one specific proj
@@ -129,7 +139,7 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
             }
             )
 
-            const ticket = await Ticket.findOne({
+            ticket = await Ticket.findOne({
                 include: [Employee],
                 where: {
                     id: ticketId
@@ -142,14 +152,33 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
 
             //only update status if dev role
         } else if (permissionDev.granted) {
-            await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
+            await Ticket.update({ status }, {
                 where: {
                     id: ticketId
                 }
             }
             )
 
-            const ticket = await Ticket.findOne({
+            ticket = await Ticket.findOne({
+                include: [Employee],
+                where: {
+                    id: ticketId
+                }
+            })
+
+            res.status(201)
+            res.json({ ticket })
+
+            // project manager -- update severity level and assigned employee
+        } else if (permissionProjectManager.granted) {
+            await Ticket.update({ severityLevel, employeeId: parsedEmployeeId }, {
+                where: {
+                    id: ticketId
+                }
+            }
+            )
+
+            ticket = await Ticket.findOne({
                 include: [Employee],
                 where: {
                     id: ticketId

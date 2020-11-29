@@ -1,4 +1,5 @@
 import {
+    ADD_TICKET,
     LOAD_TICKETS,
     REMOVE_ONE_TICKET,
     REMOVE_TICKETS,
@@ -30,6 +31,12 @@ const ticketReducer = (state = {}, action) => {
         case REMOVE_ONE_TICKET: 
             nextState = Object.assign({}, {...state})
             delete nextState[action.ticketId]
+            return nextState
+        case ADD_TICKET:
+            nextState = {
+                ...state,
+                [action.ticket.id]: action.ticket
+            }
             return nextState
         default:
             return state

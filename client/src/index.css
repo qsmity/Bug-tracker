@@ -118,7 +118,18 @@ body {
   box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
   background-color: white;
   border-radius: 4px;
+}
 
+.add-ticket-popup-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 70%;
+  height: 85%;
+  }
+
+.add-ticket-popup-form > * {
+  margin: 10px 0;
 }
 
 /* general styling for all cards */
@@ -153,7 +164,10 @@ body {
 }
 
 /* modal logic */
-.edit-ticket-close:hover, .edit-employee-close:hover{
+.edit-ticket-close:hover, 
+.edit-employee-close:hover, 
+.add-proj-close-button:hover,
+.add-ticket-close-button:hover{
   color: cyan
 }
 
@@ -170,6 +184,11 @@ body {
 .add-proj-close-button {
   position: absolute;
   left: 25%
+}
+
+.add-ticket-close-button {
+  position: absolute;
+  left: 30%
 }
 
 .hidden{
