@@ -4,6 +4,7 @@ import { signup } from '../actions/sessionAction'
 import { useDispatch } from 'react-redux';
 import * as mui from '@material-ui/core';
 import SessionNavBar from './SessionNavBar';
+import Footer from './Footer';
 
 
 
@@ -35,6 +36,7 @@ const SignupForm = () => {
                     <mui.Button variant='contained' color='primary' type='submit'>Sign Up</mui.Button>
                 </form>
             </div>
+            <Footer/>
         </>
     )
 }
