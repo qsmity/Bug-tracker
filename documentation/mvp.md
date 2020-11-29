@@ -23,8 +23,8 @@
     - edit status of ticket
     - edit level of severity of ticket
 
-- logged in as project owner: 
-    - review sibmitted ticket proposals
+- logged in as project manager: 
+    - review submitted ticket proposals
     - create tickets
     - assign devs to tickets
     - delete a ticket

@@ -1,5 +1,6 @@
 import {
     LOAD_TICKETS,
+    REMOVE_ONE_TICKET,
     REMOVE_TICKETS,
     UPDATE_TICKET
 } from '../actions/ticketAction'
@@ -25,6 +26,10 @@ const ticketReducer = (state = {}, action) => {
             //replace old ticket with new ticket
             nextState[ticketId] = Object.assign({}, ticketToUpdate, action.ticket)
             console.log('new ticket',action.ticket);
+            return nextState
+        case REMOVE_ONE_TICKET: 
+            nextState = Object.assign({}, {...state})
+            delete nextState[action.ticketId]
             return nextState
         default:
             return state

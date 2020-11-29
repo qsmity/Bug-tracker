@@ -58,7 +58,7 @@ const EditTicketPopup = ({ hidePopup, ticketName, ticketDescr, ticketId, ticketS
                         <mui.MenuItem value='bug/error'>Bug/Error</mui.MenuItem>
                         <mui.MenuItem value='task'>Task</mui.MenuItem>
                     </mui.Select>
-                    <mui.InputLabel id="demo-simple-select-label">Add Employee</mui.InputLabel>
+                    <mui.InputLabel id="demo-simple-select-label">Add/Edit Employee</mui.InputLabel>
                     <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' value={selectedEmployeeId} required>
                         <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
                         {employeesArray.map(employee => (

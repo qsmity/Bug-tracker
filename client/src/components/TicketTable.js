@@ -2,9 +2,12 @@ import React from 'react'
 import * as mui from '@material-ui/core';
 import * as FiIcons from 'react-icons/fi'
 import * as IoIcons from 'react-icons/io'
+import * as TicketActions from '../actions/ticketAction'
+import { useDispatch } from 'react-redux'
 
 const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
-    console.log('ticketsArray inside ticket table', ticketsArray)
+    const dispatch = useDispatch()
+
     //handle edit click
     const editTicket = (e) => {
         console.log('target', e.currentTarget)
@@ -17,6 +20,14 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
             e.currentTarget.dataset.severitylevel,
             e.currentTarget.dataset.status,
             e.currentTarget.dataset.employeeid)
+    }
+
+    const deleteTicket = (e) => {
+        //popup window confirming delete action is valid
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            dispatch(TicketActions.deleteTicket(e.currentTarget.id))
+        }
+        return
     }
 
     return (
@@ -64,7 +75,7 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                                             className='delete-icon'
                                             id={ticket.id}
                                             disabled={disabled}
-                                            onClick={e => console.log('delete')}
+                                            onClick={deleteTicket}
                                             size='24'>
                                             Delete
                                             </IoIcons.IoIosTrash>
@@ -75,7 +86,6 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                         })}
 
                     </mui.TableBody>
-                    {/* </div> */}
                 </mui.Table>
             </mui.TableContainer>
         </>

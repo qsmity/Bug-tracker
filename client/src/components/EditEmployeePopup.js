@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { makeStyles } from "@material-ui/core/styles";
-// import { editEmployee } from "../actions/ticketAction"
+import { updateEmployeeRole } from '../actions/employeeAction'
 import * as mui from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +28,7 @@ const EditEmployeePopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => 
     //handle submit 
     const addEmployee = (e) => {
         e.preventDefault()
+        dispatch(updateEmployeeRole(selectedEmployeeId, roleToChange))
         hidePopup()
     }
 
@@ -61,7 +62,13 @@ const EditEmployeePopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => 
                     </mui.FormControl>
                     <mui.FormControl variant="outlined" className={classes.formControl}>
                         <mui.InputLabel id="employee-role-label">Role</mui.InputLabel>
-                        <mui.Select labelId="employee-role-label" onChange={roleChange} id="employee-role-label" label='Role' name="roles" value={roleToChange} required>
+                        <mui.Select labelId="employee-role-label"
+                            onChange={roleChange}
+                            id="employee-role-label"
+                            label='Role'
+                            name="roles"
+                            value={roleToChange}
+                            required>
                             <mui.MenuItem value="" key={-1}>Select Role</mui.MenuItem>
                             <mui.MenuItem value={0} key={0}>no role</mui.MenuItem>
                             <mui.MenuItem value={1} key={1}>admin</mui.MenuItem>

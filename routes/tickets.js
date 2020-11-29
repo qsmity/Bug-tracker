@@ -8,6 +8,14 @@ const { grantsObject, ac } = require('./projects')
 
 const router = express.Router()
 
+const ticketNotFoundError = (id) => {
+    const err = new Error(`ticket not found`)
+    err.errors = [`ticket with id ${id} does not exist`]
+    err.title = 'ticket not found'
+    err.status = 404
+    return err
+}
+
 //get all tickets in db based on role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     console.log(req.user.role)
@@ -159,6 +167,42 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     }
     
 }))
+
+//delete ticket in db (admin and project manager role only)
+router.delete('/:ticketId', requireAuth, asyncHandler( async ( req, res, next ) => {
+    //employeeId will be sent when the admin clicks on the user to update the role with
+    const ticketId = parseInt(req.params.ticketId,10)
+    console.log('ticketId inside backend',ticketId)
+    //grabbing role from req to verify permissions (admin/project manager)
+    const role = req.user.role
+
+    //admin and project manager role which returns a boolean if permission granted
+    const permissionAdmin = ac.can(`${role}`).deleteAny('employees')
+    const permissionProjectManager = ac.can(`${role}`).updateAny('employees')
+    console.log('permissions1',permissionAdmin.granted)
+
+    if(permissionAdmin.granted || permissionProjectManager.granted){
+        //find ticket in db to destroy
+        const ticket = await Ticket.findByPk(ticketId)
+       
+        //if ticket exit destroy it otherwise throw a not found error
+        if(ticket){
+            await ticket.destroy()
+            res.json({ message: `Deleted ticket with id of ${ticketId}` })
+        } else {
+            next(ticketNotFoundError(ticketId))
+        }
+    } else {
+        res.status(401)
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to delete resource']
+        next(err)
+    }
+
+}))
+
 
 
 module.exports = router

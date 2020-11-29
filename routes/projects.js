@@ -47,6 +47,7 @@ let grantsObject = {
         },
         projects: {
             'read:own': ['*'],
+            'delete:any': ['*'],
             'update:own': ['employeeId'],
         }
     },

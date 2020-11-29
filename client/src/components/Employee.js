@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getEmployees } from '../actions/employeeAction'
-import { updateEmployeeRole } from '../actions/employeeAction'
 import EmployeeTable2 from './EmployeeTable2'
 import * as mui from '@material-ui/core';
 import EditEmployeePopup from './EditEmployeePopup'

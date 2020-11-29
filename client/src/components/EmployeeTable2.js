@@ -6,6 +6,8 @@ import * as IoIcons from 'react-icons/io'
 
 const EmployeeTable2 = ({ employeesArray }) => {
     const dispatch = useDispatch()
+    
+    //mapping to convert numbers roles in the db to labeled names
     const mapRoleIdToName = (roleId) => {
         switch (roleId) {
             case 1:
