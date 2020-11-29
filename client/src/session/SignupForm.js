@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import { signup } from '../actions/sessionAction'
 import { useDispatch } from 'react-redux';
 import * as mui from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import * as CgIcons from 'react-icons/cg'
+import SessionNavBar from './SessionNavBar';
 
 
 
@@ -26,22 +25,7 @@ const SignupForm = () => {
 
     return (
         <>
-            <div className='navbar login-navbar'>
-                <div className='login-navbar__logo'>
-                    <NavLink to='#' className='menu-bars'>
-                        <CgIcons.CgTrack />
-                    </NavLink>
-                    <h1 className='navbar__header login-navbar__header'>Trackerfy</h1>
-                </div>
-                <div className='login-navbar__button'>
-                    <div>
-                        <NavLink className='login-navbar__text' to='/login' >Login</NavLink>
-                    </div>
-                    <div>
-                        <NavLink className='login-navbar__text' to='/signup' >Sign Up</NavLink>
-                    </div>
-                </div>
-            </div>
+            <SessionNavBar/>
             <div className='dashboard-grid__component-login login'>
                 <div className='component__topbar'><h3>Sign Up here</h3></div>
                 <form className='login-form' onSubmit={signupUser}>

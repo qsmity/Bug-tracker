@@ -19,7 +19,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.login-navbar__text{
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
 }
 
 .navbar__logout{

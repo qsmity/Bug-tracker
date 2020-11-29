@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 //not using HOC container so don't need to import * from sessionAction to avoid namespce collision
 import { login } from '../actions/sessionAction'
 import { useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom'
-// import * as FaIcons from 'react-icons/fa'
-import * as CgIcons from 'react-icons/cg'
+import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as mui from '@material-ui/core';
 import ProfilePic from '../images/facebook-profile-pic.jpg'
-
-
+import SessionNavBar from './SessionNavBar';
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -26,22 +23,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <div className='navbar login-navbar'>
-                <div className='login-navbar__logo'>
-                    <NavLink to='#' className='menu-bars'>
-                        <CgIcons.CgTrack />
-                    </NavLink>
-                    <h1 className='navbar__header login-navbar__header'>Trackerfy</h1>
-                </div>
-                <div className='login-navbar__button'>
-                    <div>
-                        <NavLink className='login-navbar__text' to='/login' >Login</NavLink>
-                    </div>
-                    <div>
-                        <NavLink className='login-navbar__text' to='/signup' >Sign Up</NavLink>
-                    </div>
-                </div>
-            </div>
+            <SessionNavBar/>
             <div className='dashboard-grid__component-login login'>
                 <div className='component__topbar'><h3>Login Here</h3></div>
                 <form className='login-form' onSubmit={loginUser}>

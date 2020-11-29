@@ -62,14 +62,7 @@ body {
   height: 50%;
 
 }
-/* .popup__form{
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: 70%;
-  height: 85%;
-  justify-content: space-between;
-  } */
+
 
 .employee-form button{
   /* width: 90px; */
@@ -203,7 +196,6 @@ justify-content: space-between;
 
 
 
-
 .dashboard-grid__component--hidden{
   display: none;
 }
@@ -221,18 +213,6 @@ Button:disabled{
 .delete-icon {
   color: rgba(128, 128, 128, 0.726)
 }
-
-/* svg {
-  position: relative;
-  z-index: 1;
-  height: 20px;
-  width: 20px;
-}
-
-path {
-  display: none;
-} */
-
 
 .not-found {
   color: grey
