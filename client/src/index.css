@@ -11,6 +11,7 @@ body {
   padding: 0 !important
 }
 
+/* dashboard grid */
 .dashboard-grid{
   display: grid;
   row-gap: 30px;
@@ -23,6 +24,23 @@ body {
   ;
 
 }
+
+.dashboard-grid__component--hidden{
+  display: none;
+}
+
+
+/* login card */
+.dashboard-grid__component-login{
+  height: 460px;
+  width: 70%;
+  margin: 120px auto; 
+  text-align: center;
+  box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
+  background-color: white;
+  border-radius: 4px;
+}
+
 .login-form{
   display: flex;
   flex-direction: column;
@@ -32,18 +50,8 @@ body {
   justify-content: space-around;
 
 }
-.dashboard-grid__component-login{
-  height: 460px;
-  width: 70%;
-  margin: 120px auto; 
-  text-align: center;
-  box-shadow: 5px 5px 10px -5px rgba(107, 97, 97, 0.397);
-  background-color: white;
-  border-radius: 4px;
 
-
-}
-
+/* employee card */
 .dashboard-grid__component-employee{
   height: 650px;
   width: 90%;
@@ -60,29 +68,10 @@ body {
   width: 50%;
   margin: 10% auto;  
   height: 50%;
-
 }
-
 
 .employee-form button{
-  /* width: 90px; */
   margin: 10px 0;
-}
-
-.add-proj-form{
-  display: flex;
-  height: 80px;
-  justify-content: space-evenly;
-  width: 60%;
-  margin: 20px auto;
-  box-shadow: 0px 0px 5px 3px rgba(107, 97, 97, 0.068);
-  padding: 20px;
-
-}
-
-.add-proj-form__add-employee-dropdown{
-  display: flex;
-  flex-direction: column;
 }
 
 .employee-form__title{
@@ -90,6 +79,12 @@ body {
   margin: 7px 0
 }
 
+/* project card */
+
+.add-proj-form__add-employee-dropdown{
+  display: flex;
+  flex-direction: column;
+}
 
 .dashboard-grid__component-project{
   grid-area: project;
@@ -103,6 +98,20 @@ body {
 
 }
 
+.add-proj-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+  margin: 5% auto;  
+  height: 50%;
+}
+
+.project-table-container {
+  overflow: hidden;
+}
+
+/* ticket card */
 .dashboard-grid__component-ticket{
   grid-area: ticket;
   height: 425px;
@@ -115,6 +124,7 @@ body {
 
 }
 
+/* general styling for all cards */
 .component__topbar{
   height: 50px;
   position: relative;
@@ -157,6 +167,11 @@ body {
   left: 20%
 }
 
+.add-proj-close-button {
+  position: absolute;
+  left: 25%
+}
+
 .hidden{
   display: none
 }
@@ -194,12 +209,7 @@ justify-content: space-between;
 }
 
 
-
-
-.dashboard-grid__component--hidden{
-  display: none;
-}
-
+/* styling for disabled buttons -- no permissions */
 Button:disabled{
   background-color: darkgray;
 }
@@ -218,6 +228,8 @@ Button:disabled{
   color: grey
 }
 
+
+/* message displayed for new employee unassined */
 .to-be-assigned-message {
   position: relative;
   top: 120px;

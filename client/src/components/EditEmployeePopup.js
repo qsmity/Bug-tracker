@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const EditEmployeePopup = ({ hidePopup, ticketName, ticketDescr, ticketId }) => {
+const EditEmployeePopup = ({ hidePopup }) => {
     const dispatch = useDispatch()
 
     const selectedEmployee = (e) => setSelectedEmployeeId(e.target.value)

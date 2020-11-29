@@ -3,9 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { createProject } from '../actions/projectAction'
 import * as mui from '@material-ui/core';
 
-
-
-
 const AddProjectForm = () => {
 
     const dispatch = useDispatch()
@@ -23,15 +20,14 @@ const AddProjectForm = () => {
         setSelectedEmployeeId(e.target.value)
     }
 
-
     //handle submit add project
     const addProject = (e) => {
         e.preventDefault()
         dispatch(createProject(name, description, selectedEmployeeId))
         setName('')
         setDescription('')
-
     }
+
     return (
         <div>
             <form className='add-proj-form' onSubmit={addProject}>

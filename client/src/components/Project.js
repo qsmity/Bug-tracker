@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProjects } from '../actions/projectAction'
-import AddProjectForm from './AddProjectForm'
+import AddProjectPopup from './AddProjectPopup'
 import ProjectTable from './ProjectTable'
 import * as mui from '@material-ui/core';
 
@@ -18,19 +18,20 @@ const Project = ({disabled}) => {
         dispatch(getProjects())
     }, [dispatch])
 
-    //handle on click create projecdt
-    const addProject = (e) => {
-        setIsHidden(!isHidden)
+    //open and close modal logic
+    const hidePopup = () => {
+        if (isHidden === true) {
+            setIsHidden(false)
+        } else {
+            setIsHidden(true)
+        }
     }
 
-    // console.log(Object.values(employees))
     if (projectsArray.length > 0) {
         return (
-            <div >
-                <mui.Button  variant='contained' disabled={disabled} onClick={addProject}>add project</mui.Button>
-                <div className={isHidden ? 'hidden' : ''}>
-                    <AddProjectForm />
-                </div>
+            <div>
+                <mui.Button  variant='contained' disabled={disabled} onClick={hidePopup}>add project</mui.Button>
+                { !isHidden ? <AddProjectPopup hidePopup={hidePopup} /> : null}
                 <ProjectTable disabled={disabled} projectsArray={projectsArray} />
             </div>
         )

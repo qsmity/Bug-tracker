@@ -20,6 +20,7 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
             e.currentTarget.dataset.employeeid)
     }
 
+    //re-render if ticket edited to show changes
     useEffect( () => {
 
     }, [ticketsArray])

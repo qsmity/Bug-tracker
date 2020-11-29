@@ -63,7 +63,7 @@ export const createProject = (name, description, employeeId) => async (dispatch)
 
         const { project } = await res.json()
         console.log('inside getprojects thunks', project)
-        dispatch(addProject(project))
+        dispatch(getProjects())
     } catch (err) {
         console.log(err)
         //enventually will push into errors array in store

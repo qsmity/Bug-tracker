@@ -135,22 +135,19 @@ router.post('/',
 
         //grab employee id's from employeeIdArray sent to associate employee with project created
         const { name, description, employeeIdArray } = req.body
-
+        console.log('in projects backend', employeeIdArray)
         let project;
         if (permissionAdmin.granted) {
-            if (!employeeIdArray) {
-                project = await Project.create({ name, description })
-            } else {
-                project = await Project.create({ name, description })
+            project = await Project.create({ name, description })
 
-                //map over array to add association for each employee
-                employeeIdArray.map(async id => {
-                    //find employee in db
-                    const employee = await Employee.findByPk(id)
-                    //add association to project
-                    project.addEmployee(employee)
-                })
-            }
+            //map over array to add association for each employee
+            employeeIdArray.map(async id => {
+                //find employee in db
+                const employee = await Employee.findByPk(id)
+                //add association to project
+                project.addEmployee(employee)
+            })
+
             res.status(201)
             res.json({ project })
 
@@ -176,7 +173,7 @@ router.put('/',
 
         //grab employee id's from employeeIdArray sent to associate employee with project created
         const { name, description, employeeIdArray } = req.body
-        
+
         //find project in db to update
         const project = await Project.findOne({
             where: {

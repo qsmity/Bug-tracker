@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as mui from '@material-ui/core';
 import * as FiIcons from 'react-icons/fi'
 import * as IoIcons from 'react-icons/io'
 
 const ProjectTable = ({ projectsArray, disabled }) => {
+
+    //re-render if project added or edited
+    useEffect( () => {
+
+    }, [projectsArray])
+
     return (
-        <>
-            <mui.TableContainer>
+        <div >
+            <mui.TableContainer >
                 <mui.Table>
                     <mui.TableHead>
                         <mui.TableRow>
@@ -68,7 +74,7 @@ const ProjectTable = ({ projectsArray, disabled }) => {
                     </mui.TableBody>
                 </mui.Table>
             </mui.TableContainer>
-        </>
+        </div>
     )
 }
 
