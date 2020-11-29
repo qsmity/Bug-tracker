@@ -18,48 +18,51 @@ const ticketNotFoundError = (id) => {
 
 //get all tickets in db based on role
 router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
-    console.log(req.user.role)
     //req.user.role is set in the requireAuth middleware
     const role = req.user.role
     const employeeId = req.user.id
-    if (role) {
-        //admin role or submitter role which returns a boolean if permission granted
-        const permissionAdminSubmitter = ac.can(`${role}`).readAny('projects')
+    try {
+        if (role) {
+            //admin, project manager, submitter role which returns a boolean if permission granted
+            const permissionAdminSubmitterProjectManager = ac.can(`${role}`).readAny('tickets')
 
-        console.log(permissionAdminSubmitter.granted)
-        //get all tickets if admin role
-        let tickets;
-        if (permissionAdminSubmitter.granted) {
-            tickets = await Ticket.findAll({
-                include: [Project],
-                include: [Employee]
-            })
+            //get all tickets if admin, submitter, projectmanager role
+            let tickets;
+            if (permissionAdminSubmitterProjectManager.granted) {
+                tickets = await Ticket.findAll({
+                    include: [Project],
+                    include: [Employee]
+                })
 
-            //only get tickets assigned to (dev, projectManager)
+                //only get tickets assigned to dev
+            } else {
+                tickets = await Ticket.findAll({
+                    include: [Project],
+                    incude: [Employee],
+                    where: {
+                        employeeId
+                    }
+                })
+            }
+            if (tickets) {
+                res.status(200)
+                res.json({ tickets })
+            } else {
+                res.status(404).send('resource not found')
+            }
         } else {
-            tickets = await Ticket.findAll({
-                include: [Project],
-                incude: [Employee],
-                where: {
-                    employeeId
-                }
-            })
+            //build functionality for if role is not defined (new user)
+            res.status(401)
+            const err = new Error('permission denied')
+            err.title = 'permission denied'
+            err.status = 401
+            err.errors = ['role not assigned']
+            next(err)
         }
-        if (tickets) {
-            res.status(200)
-            res.json({ tickets })
-        } else {
-            res.status(404).send('resource not found')
-        }
-    } else {
-        //build functionality for if role is not defined (new user)
-        res.status(401)
-        const err = new Error('permission denied')
-        err.title = 'permission denied'
-        err.status = 401
-        err.errors = ['role not assigned']
-        next(err)
+    } catch (e) {
+        console.log(e)
     }
+
 
 }))
 
@@ -68,7 +71,7 @@ router.post('/', requireAuth,
     asyncHandler(async (req, res, next) => {
 
         const role = req.user.role
-        const permissionAdmin = ac.can(`${role}`).createAny('projects')
+        const permissionAdmin = ac.can(`${role}`).createAny('tickets')
 
         //grab employee id's from employeeIdArray sent to associate employee with project created
         const { name, description, employeeIdArray } = req.body
@@ -115,8 +118,8 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     const parsedEmployeeId = parseInt(employeeId, 10)
     //find project in db to update
 
-    console.log('employeeId ===========',employeeId);
-    try{
+    console.log('employeeId ===========', employeeId);
+    try {
         if (permissionAdmin.granted) {
             //not updating project id because ticket is created for one specific proj
             await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
@@ -125,18 +128,18 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
                 }
             }
             )
-    
+
             const ticket = await Ticket.findOne({
                 include: [Employee],
                 where: {
                     id: ticketId
                 }
             })
-    
-    
+
+
             res.status(201)
             res.json({ ticket })
-    
+
             //only update status if dev role
         } else if (permissionDev.granted) {
             await Ticket.update({ name, description, severityLevel, status, type, employeeId: parsedEmployeeId }, {
@@ -145,14 +148,14 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
                 }
             }
             )
-    
+
             const ticket = await Ticket.findOne({
                 include: [Employee],
                 where: {
                     id: ticketId
                 }
             })
-    
+
             res.status(201)
             res.json({ updatedTicket })
         } else {
@@ -162,31 +165,31 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
             err.errors = ['role not permitted to create resource']
             next(err)
         }
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
-    
+
 }))
 
 //delete ticket in db (admin and project manager role only)
-router.delete('/:ticketId', requireAuth, asyncHandler( async ( req, res, next ) => {
+router.delete('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
-    const ticketId = parseInt(req.params.ticketId,10)
-    console.log('ticketId inside backend',ticketId)
+    const ticketId = parseInt(req.params.ticketId, 10)
+    console.log('ticketId inside backend', ticketId)
     //grabbing role from req to verify permissions (admin/project manager)
     const role = req.user.role
 
     //admin and project manager role which returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).deleteAny('employees')
     const permissionProjectManager = ac.can(`${role}`).updateAny('employees')
-    console.log('permissions1',permissionAdmin.granted)
+    console.log('permissions1', permissionAdmin.granted)
 
-    if(permissionAdmin.granted || permissionProjectManager.granted){
+    if (permissionAdmin.granted || permissionProjectManager.granted) {
         //find ticket in db to destroy
         const ticket = await Ticket.findByPk(ticketId)
-       
+
         //if ticket exit destroy it otherwise throw a not found error
-        if(ticket){
+        if (ticket) {
             await ticket.destroy()
             res.json({ message: `Deleted ticket with id of ${ticketId}` })
         } else {

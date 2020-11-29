@@ -46,7 +46,7 @@ let grantsObject = {
             'update:own': ['severityLevel', 'status'],
         },
         projects: {
-            'read:own': ['*'],
+            'read:any': ['*'],
             'delete:any': ['*'],
             'update:own': ['employeeId'],
         }

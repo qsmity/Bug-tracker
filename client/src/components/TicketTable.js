@@ -3,17 +3,15 @@ import * as mui from '@material-ui/core';
 import * as FiIcons from 'react-icons/fi'
 import * as IoIcons from 'react-icons/io'
 import * as TicketActions from '../actions/ticketAction'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
     const dispatch = useDispatch()
 
+    const roleId = useSelector(state => state.session.role)
+
     //handle edit click
     const editTicket = (e) => {
-        console.log('target', e.currentTarget)
-        console.log(e.currentTarget.dataset.name)
-        console.log(e.currentTarget.dataset.descr)
-        console.log(e.currentTarget.id)
         hidePopup(e.currentTarget.dataset.name,
             e.currentTarget.dataset.descr,
             e.currentTarget.id,
@@ -23,9 +21,15 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
     }
 
     const deleteTicket = (e) => {
-        //popup window confirming delete action is valid
-        if (window.confirm('Are you sure you wish to delete this item?')) {
-            dispatch(TicketActions.deleteTicket(e.currentTarget.id))
+        //if disabled is true, don't allow unauthorized user to delete ticket
+        if(disabled){
+            alert('Not permitted to delete tickets')
+        } else {
+            //popup window confirming delete action is valid
+            if (window.confirm('Are you sure you wish to delete this item?')) {
+                dispatch(TicketActions.deleteTicket(e.currentTarget.id))
+            }
+            return
         }
         return
     }
@@ -71,14 +75,27 @@ const TicketTable = ({ ticketsArray, disabled, hidePopup }) => {
                                         </div>
                                     </mui.TableCell>
                                     <mui.TableCell>
-                                        <IoIcons.IoIosTrash
-                                            className='delete-icon'
-                                            id={ticket.id}
-                                            disabled={disabled}
-                                            onClick={deleteTicket}
-                                            size='24'>
-                                            Delete
+                                        {
+                                            roleId !== 1 && roleId !== 2 ?
+                                                <IoIcons.IoIosTrash
+                                                    className='delete-icon'
+                                                    id={ticket.id}
+                                                    disabled={true}
+                                                    onClick={deleteTicket}
+                                                    size='24'>
+                                                    Delete
                                             </IoIcons.IoIosTrash>
+                                                :
+                                                <IoIcons.IoIosTrash
+                                                    className='delete-icon'
+                                                    id={ticket.id}
+                                                    disabled={disabled}
+                                                    onClick={deleteTicket}
+                                                    size='24'>
+                                                    Delete
+                                            </IoIcons.IoIosTrash>
+
+                                        }
                                     </mui.TableCell>
 
                                 </mui.TableRow>
