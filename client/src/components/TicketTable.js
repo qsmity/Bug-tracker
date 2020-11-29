@@ -46,8 +46,8 @@ const TicketTable = ({ ticketsArray, disabled, hideEditTicketPopup }) => {
                     <mui.TableHead>
                         <mui.TableRow>
                             <mui.TableCell>Name</mui.TableCell>
-                            <mui.TableCell align='right' style={{paddingLeft: '50px', paddingRight: '0'}}>Description</mui.TableCell>
-                            <mui.TableCell align='right' style={{paddingLeft: '50px', paddingRight: '0'}}>Severity Level</mui.TableCell>
+                            <mui.TableCell align='center' style={{paddingLeft: '50px', paddingRight: '0'}}>Description</mui.TableCell>
+                            <mui.TableCell align='right' style={{paddingLeft: '15px', paddingRight: '0'}}>Severity Level</mui.TableCell>
                             <mui.TableCell align='center' style={{paddingRight: '0'}}>Status</mui.TableCell>
                             <mui.TableCell align='center'>Assigned Empoyee</mui.TableCell>
                             <mui.TableCell></mui.TableCell>

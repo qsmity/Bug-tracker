@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AddTicketPopup = ({ hideAddTicketPopup }) => {
+const AddTicketPopup = ({ hideAddTicketPopup, projectsArray }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
@@ -23,7 +23,7 @@ const AddTicketPopup = ({ hideAddTicketPopup }) => {
 
     const [description, setDescription] = useState('')
     const updateDescription = (e) => setDescription(e.target.value)
-    
+
     const [severityLevel, setSeverityLevel] = useState('')
     const updateSeverityLevel = (e) => setSeverityLevel(e.target.value)
 
@@ -33,7 +33,11 @@ const AddTicketPopup = ({ hideAddTicketPopup }) => {
     const [type, setType] = useState('bug/error')
     const updateType = (e) => setType(e.target.value)
 
-    const roleId = useSelector(state => state.session.role)
+    const [selectedProjectId, setSelectedProjectId] = useState('')
+    const updateSelectedProject = (e) => setSelectedProjectId(e.target.value)
+
+
+    // const roleId = useSelector(state => state.session.role)
 
     //subscribe to the employee slice of state for the drop down
     // const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
@@ -48,7 +52,7 @@ const AddTicketPopup = ({ hideAddTicketPopup }) => {
     // handle submit 
     const addTicket = (e) => {
         e.preventDefault()
-        dispatch(createTicket(name, description, severityLevel, status, type))
+        dispatch(createTicket(name, description, severityLevel, status, type, selectedProjectId))
         hideAddTicketPopup()
     }
 
@@ -71,7 +75,7 @@ const AddTicketPopup = ({ hideAddTicketPopup }) => {
                 <mui.Button variant="contained" onClick={close} className="add-ticket-close-button">exit</mui.Button>
                 <form onSubmit={addTicket} className='add-ticket-popup-form'>
                     <mui.TextField onChange={updateName} id="standard-required" label='Name' value={name} required />
-                    <mui.TextField onChange={updateDescription} rowsMax={4} label='description' id='standard-multiline-flexible' value={description} multiline required/>
+                    <mui.TextField onChange={updateDescription} rowsMax={4} label='description' id='standard-multiline-flexible' value={description} multiline required />
 
                     <mui.InputLabel id="demo-simple-select-label">Severity Level</mui.InputLabel>
                     <mui.Select labelId="demo-simple-select-label" id='severityLevel' onChange={updateSeverityLevel} value={severityLevel} required>
@@ -92,6 +96,15 @@ const AddTicketPopup = ({ hideAddTicketPopup }) => {
                         <mui.MenuItem value='task'>Task</mui.MenuItem>
                     </mui.Select>
 
+                    <mui.InputLabel id="demo-simple-select-label">Assign to Project</mui.InputLabel>
+                    <mui.Select labelId='demo-simple-select-label' onChange={updateSelectedProject} id='project' value={selectedProjectId} required>
+                        <mui.MenuItem value='' key={-1}>Select Project</mui.MenuItem>
+                        {projectsArray ? projectsArray.map(project => (
+                            <mui.MenuItem key={project.id} value={project.id}>{project.name}</mui.MenuItem>
+                        ))
+                        : null
+                        }
+                    </mui.Select>
                     <mui.Button variant='contained' type='submit'>Add</mui.Button>
                 </form>
             </div>

@@ -10,6 +10,8 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
     const dispatch = useDispatch()
     const tickets = useSelector(state => state.tickets)
     const ticketsArray = Object.values(tickets)
+    const projects = useSelector(state => state.projects)
+    const projectsArray = Object.values(projects)
 
     //grab ticket name and description for edit button popup
     const [ticketName, setTicketName] = useState('hello')
@@ -78,7 +80,7 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
                     ticketStatus={ticketStatus}
                     hideEditTicketPopup={hideEditTicketPopup} /> : null}
 
-                { !isAddTicketHidden ? <AddTicketPopup hideAddTicketPopup={hideAddTicketPopup} /> : null}
+                { !isAddTicketHidden ? <AddTicketPopup projectsArray={projectsArray} hideAddTicketPopup={hideAddTicketPopup} /> : null}
             </div>
         )
     } else {

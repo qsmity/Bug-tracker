@@ -70,46 +70,50 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
 router.post('/', requireAuth,
     asyncHandler(async (req, res, next) => {
 
-        const role = req.user.role
-        const permissionAdmin = ac.can(`${role}`).createAny('tickets')
-        const permissionSubmitter = ac.can(`${role}`).createAny('tickets')
+        try {
+            const role = req.user.role
+            const permissionAdmin = ac.can(`${role}`).createAny('tickets')
+            const permissionSubmitter = ac.can(`${role}`).createAny('tickets')
 
-        //grab employee id's from employeeIdArray sent to associate employee with project created
-        const { name,
-            description,
-            severityLevel,
-            status, 
-            type,
-            projectId} = req.body
-        
-        const parsedProjectId = parseInt(projectId, 10)
-
-        let ticket;
-        if (permissionAdmin.granted || permissionSubmitter.granted) {
-            ticket = await Ticket.create({
-                name,
+            //grab employee id's from employeeIdArray sent to associate employee with project created
+            const { name,
                 description,
                 severityLevel,
                 status,
                 type,
-                projectId: parsedProjectId
-            })
+                projectId } = req.body
 
-            //add project association to ticket
-            const project = await Project.findByPk(projectId)
-            ticket.addProject(project)
+            const parsedProjectId = parseInt(projectId, 10)
 
+            let ticket;
+            if (permissionAdmin.granted || permissionSubmitter.granted) {
+                ticket = await Ticket.create({
+                    name,
+                    description,
+                    severityLevel,
+                    status,
+                    type,
+                    projectId: parsedProjectId
+                })
 
-            res.status(201)
-            res.json({ ticket })
+                //add project association to ticket
+                const project = await Project.findByPk(projectId)
+                project.addTicket(ticket)
 
-        } else {
-            const err = new Error('permission denied')
-            err.title = 'permission denied'
-            err.status = 401
-            err.errors = ['role not permitted to create resource']
-            next(err)
+                res.status(201)
+                res.json({ ticket })
+
+            } else {
+                const err = new Error('permission denied')
+                err.title = 'permission denied'
+                err.status = 401
+                err.errors = ['role not permitted to create resource']
+                next(err)
+            }
+        } catch (e) {
+            console.log(e);
         }
+
 
 
     }))
