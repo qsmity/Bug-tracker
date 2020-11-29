@@ -6,7 +6,7 @@ import * as mui from '@material-ui/core';
 import EditEmployeePopup from './EditEmployeePopup'
 
 
-const Employee = ({ employeesArray }) => {
+const Employee = ({ employeesArray, disabled }) => {
     const dispatch = useDispatch()
 
     //hidden state for edit employee popup
@@ -28,7 +28,7 @@ const Employee = ({ employeesArray }) => {
     if (employeesArray.length > 0) {
         return (
             <div>
-                <EmployeeTable2 employeesArray={employeesArray} />
+                <EmployeeTable2 employeesArray={employeesArray} disabled={disabled}/>
                 <mui.Button variant='contained' onClick={hidePopup} type='click'>Edit Employee</mui.Button>
                 { !isHidden ? <EditEmployeePopup hidePopup={hidePopup} /> : null}
 

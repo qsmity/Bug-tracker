@@ -4,9 +4,9 @@ import * as employeeAction from '../actions/employeeAction'
 import * as mui from '@material-ui/core';
 import * as IoIcons from 'react-icons/io'
 
-const EmployeeTable2 = ({ employeesArray }) => {
+const EmployeeTable2 = ({ employeesArray, disabled }) => {
     const dispatch = useDispatch()
-    
+
     //mapping to convert numbers roles in the db to labeled names
     const mapRoleIdToName = (roleId) => {
         switch (roleId) {
@@ -25,8 +25,14 @@ const EmployeeTable2 = ({ employeesArray }) => {
     }
 
     const deleteEmployee = (e) => {
-        if (window.confirm('Are you sure you wish to delete this item?')) {
-            dispatch(employeeAction.deleteEmployee(e.target.id))
+        //if disabled (no permissions) alert action is not permitted
+        if(disabled){
+            alert('Not permitted to delete employees')
+        } else {
+            if (window.confirm('Are you sure you wish to delete this item?')) {
+                dispatch(employeeAction.deleteEmployee(e.target.id))
+            }
+            return
         }
         return
     }
