@@ -46,7 +46,6 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
             }
             if (tickets) {
                 res.status(200)
-                console.log('backend tickets', tickets)
                 res.json({ tickets })
             } else {
                 res.status(404).send('resource not found')
@@ -209,14 +208,12 @@ router.put('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
 router.delete('/:ticketId', requireAuth, asyncHandler(async (req, res, next) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
     const ticketId = parseInt(req.params.ticketId, 10)
-    console.log('ticketId inside backend', ticketId)
     //grabbing role from req to verify permissions (admin/project manager)
     const role = req.user.role
 
     //admin and project manager role which returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).deleteAny('employees')
     const permissionProjectManager = ac.can(`${role}`).updateAny('employees')
-    console.log('permissions1', permissionAdmin.granted)
 
     if (permissionAdmin.granted || permissionProjectManager.granted) {
         //find ticket in db to destroy

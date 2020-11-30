@@ -26,14 +26,12 @@ const getUserToken = (user) => {
 const restoreUser = (req, res, next) => {
   // token being parsed from request's cookies by the cookie-parser middleware
   // function in app.js:
-  console.log(req.cookies)
   const { token } = req.cookies;
 
   if (!token) {
     // Send a "401 Unauthorized" response status code
     return res.status(401).end();
   }
-console.log('in restore user token');
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
     if (err) {
       err.status = 401;

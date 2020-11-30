@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { makeStyles } from "@material-ui/core/styles";
 import { createProject } from '../actions/projectAction'
 import * as mui from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
-
 const AddProjectPopup = ({ hideAddProjectPopup }) => {
-    const classes = useStyles()
     const dispatch = useDispatch()
 
     const [name, setName] = useState('')

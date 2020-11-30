@@ -56,7 +56,7 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
 
     useEffect(() => {
         dispatch(getTickets())
-    }, [])
+    }, [dispatch])
 
     if (ticketsArray.length > 0) {
         return (

@@ -78,8 +78,7 @@ const ProjectTable = ({ projectsArray, projects, disabled, hideEditProjectPopup 
                                                 id={project.id}
                                                 data-name={project.name}
                                                 data-descr={project.description}
-                                                data-employeeid={project.employeeId}
-                                                disabled={disabled} />
+                                                data-employeeid={project.employeeId}/>
 
                                         </mui.TableCell>
                                         <mui.TableCell>

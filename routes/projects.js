@@ -95,7 +95,6 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
         //admin role or submitter role which returns a boolean if permission granted
         const permissionAdminSubmitter = ac.can(`${role}`).readAny('projects')
 
-        console.log(permissionAdminSubmitter.granted)
         //get all projects if admin role
         let projects;
         if (permissionAdminSubmitter.granted) {
@@ -194,39 +193,21 @@ router.put('/:projectId',
                 if (!employeeIdArray) {
                     //update proj in db
                     await project.update({ name, description })
-                    // await Project.update({ name, description }, {
-                    //     include: [Employee],
-                    //     where: {
-                    //         id: projectId
-                    //     }
-                    // })
+
                 } else {
-                    
+
                     //not updating project id because ticket is created for one specific proj
-                    // await Project.update({ name, description }, {
-                        //     include: [Employee],
-                        //     where: {
-                            //         id: projectId
-                            //     }
-                            // })
-                            await project.update({ name, description })
-                            
-                            //map over array to add association for each employee
-                            employeeIdArray.map(async id => {
-                                //find employee in db
-                                const employee = await Employee.findByPk(id)
-                                //update association
-                                await project.addEmployee(employee)
-                            })
+                    await project.update({ name, description })
+
+                    //map over array to add association for each employee
+                    employeeIdArray.map(async id => {
+                        //find employee in db
+                        const employee = await Employee.findByPk(id)
+                        //update association
+                        await project.addEmployee(employee)
+                    })
                 }
 
-                // project = await Project.findOne({
-                //     include: [Employee],
-                //     where: {
-                //         id: projectId
-                //     }
-                // })
-                console.log('back end project', project)
                 res.status(201)
                 res.json({ project })
 
@@ -250,13 +231,11 @@ router.put('/:projectId',
 router.delete('/:projectId', requireAuth, asyncHandler(async (req, res, next) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
     const projectId = parseInt(req.params.projectId, 10)
-    console.log('projectId inside backend', projectId)
     //grabbing role from req to verify permissions (admin/project manager)
     const role = req.user.role
 
     //admin returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).deleteAny('projects')
-    console.log('permissions1', permissionAdmin.granted)
 
     if (permissionAdmin.granted || permissionProjectManager.granted) {
         //find project in db to destroy

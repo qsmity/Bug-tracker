@@ -78,8 +78,7 @@ export const createProject = (name, description, employeeId) => async (dispatch)
             throw res
         }
 
-        const { project } = await res.json()
-        console.log('inside getprojects thunks', project)
+        // const { project } = await res.json()
         // dispatch(AddProject(project))
         //temporary fix read note above
         dispatch(getProjects())
@@ -113,8 +112,7 @@ export const editProject = (name, description, employeeId, projectId) => async (
         if (!res.ok) {
             throw res
         }
-        const { project } = await res.json()
-        console.log('in proj reducer', project)
+        // const { project } = await res.json()
         // dispatch(updateProject(project))
         //temporary fix read note above
         dispatch(getProjects())

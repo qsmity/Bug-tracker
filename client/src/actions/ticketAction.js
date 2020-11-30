@@ -38,7 +38,6 @@ export const getTickets = () => async (dispatch) => {
             throw res
         }
         const { tickets } = await res.json()
-        console.log('all tickets', tickets)
         dispatch(loadTickets(tickets))
     } catch (err) {
         console.log(err)
@@ -76,7 +75,6 @@ export const createTicket = (name,
             }
 
             const { ticket } = await res.json()
-            console.log('inside createticket thunk', ticket)
             dispatch(addTicket(ticket))
         } catch (err) {
             console.log(err)

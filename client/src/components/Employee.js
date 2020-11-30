@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getEmployees } from '../actions/employeeAction'
 import EmployeeTable2 from './EmployeeTable2'
 import * as mui from '@material-ui/core';

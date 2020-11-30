@@ -12,7 +12,6 @@ const TicketTable = ({ ticketsArray, disabled, hideEditTicketPopup }) => {
 
     //handle edit click
     const editTicket = (e) => {
-        console.log(e.currentTarget)
         hideEditTicketPopup(e.currentTarget.dataset.name,
             e.currentTarget.dataset.descr,
             e.currentTarget.id,
@@ -56,7 +55,7 @@ const TicketTable = ({ ticketsArray, disabled, hideEditTicketPopup }) => {
                         </mui.TableRow>
                     </mui.TableHead>
                 </mui.Table>
-                <div className='table-container' style={{ overflow: 'auto', height: '400px' }}>
+                <div className='table-container' style={{ overflow: 'auto', height: '350px' }}>
                     <mui.Table>
                         <mui.TableBody>
                             {ticketsArray.map(ticket => {

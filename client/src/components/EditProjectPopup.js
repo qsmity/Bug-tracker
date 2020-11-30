@@ -33,7 +33,6 @@ const EditProjectPopup = ({ hideEditProjectPopup, projectName, projectDescr, pro
     const editProject = (e) => {
         e.preventDefault()
         dispatch(ProjectActions.editProject(name, description, selectedEmployeeId, projectId))
-        console.log('in popup', name, description, selectedEmployeeId, projectId,)
 
         //clear inputs after submission
         setName('')
@@ -88,7 +87,7 @@ const EditProjectPopup = ({ hideEditProjectPopup, projectName, projectDescr, pro
                 <div className='popup'>
                     <div className='component__topbar component__topbar--blue'><h3>Edit Ticket</h3></div>
                     <mui.Button variant='contained' onClick={close} className='edit-proj-close-button'>exit</mui.Button>
-                    <form className='vedit-proj-popup-form'>
+                    <form className='edit-proj-popup-form'>
 
                         <mui.TextField disabled id="standard-required" label='Name' defaultValue={name} />
                         <mui.TextField rowsMax={4} disabled label='Description' id='standard-multiline-flexible' value={description} multiline />

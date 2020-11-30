@@ -30,9 +30,9 @@ const SignupForm = () => {
             <div className='dashboard-grid__component-login login'>
                 <div className='component__topbar'><h3>Sign Up here</h3></div>
                 <form className='login-form' onSubmit={signupUser}>
-                    <mui.TextField id="standard-basic" label="Name" onChange={updateName} name='name' type='name' value={name} required />
-                    <mui.TextField id="standard-basic" label="Email" onChange={updateEmail} name='email' type='email' value={email} required />
-                    <mui.TextField id="standard-basic" label="Password" onChange={updatePassword} name='password' type='password' value={password} required />
+                    <mui.TextField label="Name" onChange={updateName} name='name' type='name' value={name} required />
+                    <mui.TextField label="Email" onChange={updateEmail} name='email' type='email' value={email} required />
+                    <mui.TextField label="Password" onChange={updatePassword} name='password' type='password' value={password} required />
                     <mui.Button variant='contained' color='primary' type='submit'>Sign Up</mui.Button>
                 </form>
             </div>

@@ -26,7 +26,6 @@ const ticketReducer = (state = {}, action) => {
             const ticketToUpdate = nextState[ticketId]
             //replace old ticket with new ticket
             nextState[ticketId] = Object.assign({}, ticketToUpdate, action.ticket)
-            console.log('new ticket',action.ticket);
             return nextState
         case REMOVE_ONE_TICKET: 
             nextState = Object.assign({}, {...state})

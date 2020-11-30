@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editTicket } from '../actions/ticketAction'
 import * as mui from '@material-ui/core';
@@ -35,7 +35,6 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
     const addTicket = (e) => {
         e.preventDefault()
         dispatch(editTicket(name, description, severityLevel, status, type, selectedEmployeeId, ticketId))
-        console.log('in popup', name, description, severityLevel, status, type, ticketId, selectedEmployeeId)
         setName('')
         setDescription('')
         hideEditTicketPopup()

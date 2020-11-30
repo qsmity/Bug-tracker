@@ -52,8 +52,6 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
     const permissionAdmin = ac.can(`${role}`).readAny('employees')
     const permissionProjectManager = ac.can(`${role}`).readAny('employees')
     
-    console.log(permissionAdmin.granted)
-
     if(permissionAdmin.granted || permissionProjectManager.granted){
         const employees = await Employee.findAll({
             where: {
@@ -91,7 +89,6 @@ router.post('/',
     validateEmailAndPassword,
     asyncHandler( async ( req, res ) => {
     const { name , email, password } = req.body
-    // console.log(name, email, password)
 
     const hashedPassword = bcrypt.hashSync(password)
     const employee = await Employee.create({ name, email, hashedPassword })
@@ -121,7 +118,6 @@ router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) =
 
     //admin role which returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).updateAny('employees')
-    console.log(permissionAdmin.granted)
 
     if(permissionAdmin.granted){
         const employee = await Employee.findByPk(employeeId)
@@ -146,13 +142,11 @@ router.put('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) =
 router.delete('/:employeeId', requireAuth, asyncHandler( async ( req, res, next ) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
     const employeeId = parseInt(req.params.employeeId,10)
-    console.log('employeeId',employeeId)
     //grabbing role from req to verify permissions (admin)
     const role = req.user.role
 
     //admin role which returns a boolean if permission granted
     const permissionAdmin = ac.can(`${role}`).updateAny('employees')
-    console.log(permissionAdmin.granted)
 
     if(permissionAdmin.granted){
         //find employee in db to destroy
