@@ -1,14 +1,16 @@
 import {
     ADD_PROJECT,
     LOAD_PROJECTS,
+    REMOVE_ONE_PROJECT,
     REMOVE_PROJECTS,
+    UPDATE_PROJECT,
 
 } from '../actions/projectAction'
 
 
 //reducer
 const projectReducer = (state = {}, action) => {
-    let nextState;
+    let nextState = Object.assign({}, state)
     switch (action.type) {
         case LOAD_PROJECTS:
             nextState = {}
@@ -16,13 +18,23 @@ const projectReducer = (state = {}, action) => {
                 return nextState[project.id] = project
             })
             return nextState
-        case ADD_PROJECT: 
+        case UPDATE_PROJECT:
+            const projectId = action.project.id
+            const projectToUpdate = nextState[projectId]
+            //replace old project with new project
+            nextState[projectId] = Object.assign({}, projectToUpdate, action.project)
+            return nextState
+        case ADD_PROJECT:
             nextState = {
                 ...state,
                 [action.project.id]: action.project
             }
             return nextState
-        case REMOVE_PROJECTS: 
+        case REMOVE_ONE_PROJECT:
+            nextState = Object.assign({}, { ...state })
+            delete nextState[action.projectId]
+            return nextState
+        case REMOVE_PROJECTS:
             return {}
         default:
             return state

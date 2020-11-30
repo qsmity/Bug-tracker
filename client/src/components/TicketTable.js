@@ -12,6 +12,7 @@ const TicketTable = ({ ticketsArray, disabled, hideEditTicketPopup }) => {
 
     //handle edit click
     const editTicket = (e) => {
+        console.log(e.currentTarget)
         hideEditTicketPopup(e.currentTarget.dataset.name,
             e.currentTarget.dataset.descr,
             e.currentTarget.id,

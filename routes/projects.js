@@ -74,6 +74,14 @@ let grantsObject = {
     }
 };
 
+const projectNotFoundError = (id) => {
+    const err = new Error(`project not found`)
+    err.errors = [`project with id ${id} does not exist`]
+    err.title = 'project not found'
+    err.status = 404
+    return err
+}
+
 //create new ac instance and set grants for roles
 const ac = new AcessControl(grantsObject)
 
@@ -160,11 +168,13 @@ router.post('/',
 
     }))
 
-//edit project admin
-router.put('/',
+//edit project admin role only
+router.put('/:projectId',
     validateProjectNameAndDescription,
     requireAuth,
     asyncHandler(async (req, res, next) => {
+
+        const projectId = parseInt(req.params.projectId)
 
         const role = req.user.role
         const permissionAdmin = ac.can(`${role}`).updateAny('projects')
@@ -173,9 +183,9 @@ router.put('/',
         const { name, description, employeeIdArray } = req.body
 
         //find project in db to update
-        const project = await Project.findOne({
+        let project = await Project.findOne({
             where: {
-                name
+                id: projectId
             }
         });
 
@@ -194,6 +204,14 @@ router.put('/',
                     project.addEmployee(employee)
                 })
             }
+
+            project = await Project.findOne({
+                include: [Employee],
+                where: {
+                    id: projectId
+                }
+            })
+            
             res.status(201)
             res.json({ project })
 
@@ -209,6 +227,39 @@ router.put('/',
 
     }))
 
+    //delete project in db (admin only)
+router.delete('/:projectId', requireAuth, asyncHandler(async (req, res, next) => {
+    //employeeId will be sent when the admin clicks on the user to update the role with
+    const projectId = parseInt(req.params.projectId, 10)
+    console.log('projectId inside backend', projectId)
+    //grabbing role from req to verify permissions (admin/project manager)
+    const role = req.user.role
+
+    //admin returns a boolean if permission granted
+    const permissionAdmin = ac.can(`${role}`).deleteAny('projects')
+    console.log('permissions1', permissionAdmin.granted)
+
+    if (permissionAdmin.granted || permissionProjectManager.granted) {
+        //find project in db to destroy
+        const project = await Project.findByPk(projectId)
+
+        //if project exist destroy it otherwise throw a not found error
+        if (project) {
+            await project.destroy()
+            res.json({ message: `Deleted project with id of ${projectId}` })
+        } else {
+            next(projectNotFoundError(projectId))
+        }
+    } else {
+        res.status(401)
+        const err = new Error('permission denied')
+        err.title = 'permission denied'
+        err.status = 401
+        err.errors = ['role not permitted to delete resource']
+        next(err)
+    }
+
+}))
 
 //export grant objects for permissions to be accessed in other routes
 module.exports = {

@@ -29,7 +29,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
 
     //find the current employee name to populate the name field for users that don't have access to employees for the dropdown in edit tickets (submitter and dev)
     const ticketsObj = useSelector(state => state.tickets)
-    const currentEmployeeName = ticketsObj[ticketId].Employee
+    const currentEmployeeNameId = ticketsObj[ticketId].Employee
 
     //handle submit 
     const addTicket = (e) => {
@@ -67,8 +67,14 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         </mui.Select >
 
                         <mui.InputLabel id="demo-simple-select-label">Add/Edit Employee</mui.InputLabel>
-                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={selectedEmployeeId} value={selectedEmployeeId} required>
+                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={`${selectedEmployeeId}`} value={`${selectedEmployeeId}`} required>
                             <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
+                            {/* must hard code in demo employees since that aren't returned from db to protect them from being delete by an admin */}
+                            <mui.MenuItem key={1} value={1}>demo_user_admin</mui.MenuItem>
+                            <mui.MenuItem key={2} value={2}>demo_user_projectManager</mui.MenuItem>
+                            <mui.MenuItem key={3} value={3}>demo_user_dev</mui.MenuItem>
+                            <mui.MenuItem key={4} value={4}>demo_user_submitter</mui.MenuItem>
+                            {/* populate the other non demo user employees */}
                             {employeesArray.map(employee => (
                                 <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
 
@@ -96,7 +102,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         <mui.TextField rowsMax={4} disabled label='Status' id='standard-multiline-flexible' value={status} />
                         <mui.TextField disabled id="standard-required" label='type' defaultValue={type} />
                         <mui.TextField disabled id="standard-required" label='Severity Level' defaultValue={type} />
-                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeName} />
+                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeNameId} />
                     </form>
                 </div>
             </div>
@@ -115,7 +121,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         <mui.TextField rowsMax={4} disabled label='Description' id='standard-multiline-flexible' value={description} multiline />
                         <mui.TextField rowsMax={4} disabled label='Status' id='standard-multiline-flexible' value={status} />
                         <mui.TextField disabled id="standard-required" label='type' defaultValue={type} />
-                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeName} />
+                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeNameId} />
 
                         <mui.InputLabel id="demo-simple-select-label">Status</mui.InputLabel>
                         <mui.Select labelId="demo-simple-select-label" id='status' onChange={updateStatus} value={status}>
@@ -160,8 +166,14 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         </mui.Select>
 
                         <mui.InputLabel id="demo-simple-select-label">Add/Edit Employee</mui.InputLabel>
-                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={selectedEmployeeId} value={selectedEmployeeId} required>
+                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={`${selectedEmployeeId}`} value={`${selectedEmployeeId}`} required>
                             <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
+                            {/* must hard code in demo employees since that aren't returned from db to protect them from being delete by an admin */}
+                            <mui.MenuItem key={1} value={1}>demo_user_admin</mui.MenuItem>
+                            <mui.MenuItem key={2} value={2}>demo_user_projectManager</mui.MenuItem>
+                            <mui.MenuItem key={3} value={3}>demo_user_dev</mui.MenuItem>
+                            <mui.MenuItem key={4} value={4}>demo_user_submitter</mui.MenuItem>
+                            {/* populate the other non demo user employees */}
                             {employeesArray.map(employee => (
                                 <mui.MenuItem key={employee.id} value={employee.id}>{employee.name}</mui.MenuItem>
 

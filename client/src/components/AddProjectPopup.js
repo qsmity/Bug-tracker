@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AddProjectPopup = ({ hidePopup }) => {
+const AddProjectPopup = ({ hideAddProjectPopup }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
@@ -35,12 +35,12 @@ const AddProjectPopup = ({ hidePopup }) => {
     const addProject = (e) => {
         e.preventDefault()
         dispatch(createProject(name, description, selectedEmployeeId))
-        hidePopup()
+        hideAddProjectPopup()
     }
 
     // handle close click
     const close = (e) => {
-        hidePopup()
+        hideAddProjectPopup()
     }
 
     //re-render when new project added or edited

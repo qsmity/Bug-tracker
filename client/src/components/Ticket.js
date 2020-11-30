@@ -14,8 +14,8 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
     const projectsArray = Object.values(projects)
 
     //grab ticket name and description for edit button popup
-    const [ticketName, setTicketName] = useState('hello')
-    const [ticketDescr, setTicketDescr] = useState('goodbye')
+    const [ticketName, setTicketName] = useState('')
+    const [ticketDescr, setTicketDescr] = useState('')
     const [ticketId, setTicketId] = useState('')
     const [ticketSeverityLevel, setTicketSeverityLevel] = useState('')
     const [ticketStatus, setTicketStatus] = useState('')
