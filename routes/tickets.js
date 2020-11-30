@@ -38,7 +38,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
             } else {
                 tickets = await Ticket.findAll({
                     include: [Project],
-                    incude: [Employee],
+                    include: [Employee],
                     where: {
                         employeeId
                     }
@@ -46,6 +46,7 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
             }
             if (tickets) {
                 res.status(200)
+                console.log('backend tickets', tickets)
                 res.json({ tickets })
             } else {
                 res.status(404).send('resource not found')

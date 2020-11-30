@@ -11,13 +11,13 @@ const path = require('path')
 //external imports 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(cookieParser())
 
 
 //api
-const usersRouter  = require('./routes/users')
+const usersRouter = require('./routes/users')
 const sessionRouter = require('./routes/session')
 const { projectsRouter } = require('./routes/projects')
 const ticketsRouter = require('./routes/tickets')
@@ -31,17 +31,14 @@ app.use('/api/tickets', ticketsRouter)
 
 app.use(express.static(path.join(__dirname, '/client/build')));
 
+
 app.get(/\/(?!api)*/, (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/static/favicon.ico'));
 });
 
-// 'create:any': ['*'],
-// 'read:any': ['*'],
-// 'update:any': ['*', '!views'],
-// 'delete:any': ['*']
-//setting up access control permisssions
-
-// console.log(ac.getGrants())
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
