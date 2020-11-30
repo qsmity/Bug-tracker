@@ -29,7 +29,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
 
     //find the current employee name to populate the name field for users that don't have access to employees for the dropdown in edit tickets (submitter and dev)
     const ticketsObj = useSelector(state => state.tickets)
-    const currentEmployeeNameId = ticketsObj[ticketId].Employee
+    const currentEmployeeName = ticketsObj[ticketId].Employee
 
     //handle submit 
     const addTicket = (e) => {
@@ -102,7 +102,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         <mui.TextField rowsMax={4} disabled label='Status' id='standard-multiline-flexible' value={status} />
                         <mui.TextField disabled id="standard-required" label='type' defaultValue={type} />
                         <mui.TextField disabled id="standard-required" label='Severity Level' defaultValue={type} />
-                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeNameId} />
+                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeName} />
                     </form>
                 </div>
             </div>
@@ -121,7 +121,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
                         <mui.TextField rowsMax={4} disabled label='Description' id='standard-multiline-flexible' value={description} multiline />
                         <mui.TextField rowsMax={4} disabled label='Status' id='standard-multiline-flexible' value={status} />
                         <mui.TextField disabled id="standard-required" label='type' defaultValue={type} />
-                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeNameId} />
+                        <mui.TextField disabled id="standard-required" label='Employee' defaultValue={currentEmployeeName} />
 
                         <mui.InputLabel id="demo-simple-select-label">Status</mui.InputLabel>
                         <mui.Select labelId="demo-simple-select-label" id='status' onChange={updateStatus} value={status}>

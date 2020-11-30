@@ -22,7 +22,7 @@ const projectReducer = (state = {}, action) => {
             const projectId = action.project.id
             const projectToUpdate = nextState[projectId]
             //replace old project with new project
-            nextState[projectId] = Object.assign({}, projectToUpdate, action.project)
+            nextState[projectId] = Object.assign({} , {...action.project})
             return nextState
         case ADD_PROJECT:
             nextState = {

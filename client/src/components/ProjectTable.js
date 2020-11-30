@@ -5,13 +5,13 @@ import * as IoIcons from 'react-icons/io'
 import * as ProjectActions from '../actions/projectAction'
 import { useDispatch } from 'react-redux'
 
-const ProjectTable = ({ projectsArray, disabled, hideEditProjectPopup }) => {
+const ProjectTable = ({ projectsArray, projects, disabled, hideEditProjectPopup }) => {
     const dispatch = useDispatch()
 
     //re-render if ticket edited to show changes
     useEffect(() => {
 
-    }, [projectsArray])
+    }, [projects])
 
     //handle edit click
     const editProject = (e) => {

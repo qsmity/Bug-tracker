@@ -107,6 +107,15 @@ body {
   height: 50%;
 }
 
+.edit-proj-popup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+  margin: 5% auto;  
+  height: 70%;
+}
+
 
 /* ticket card */
 .dashboard-grid__component-ticket{
@@ -167,7 +176,8 @@ body {
 .edit-ticket-close:hover, 
 .edit-employee-close:hover, 
 .add-proj-close-button:hover,
-.add-ticket-close-button:hover{
+.add-ticket-close-button:hover,
+.edit-proj-close-button:hover{
   color: cyan
 }
 
@@ -182,6 +192,11 @@ body {
 }
 
 .add-proj-close-button {
+  position: absolute;
+  left: 25%
+}
+
+.edit-proj-close-button {
   position: absolute;
   left: 25%
 }

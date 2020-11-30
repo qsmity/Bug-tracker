@@ -1,4 +1,4 @@
-import React, { useState  } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as ProjectActions from '../actions/projectAction'
 import * as mui from '@material-ui/core';
@@ -6,24 +6,28 @@ import * as mui from '@material-ui/core';
 const EditProjectPopup = ({ hideEditProjectPopup, projectName, projectDescr, projectId, projectEmployeeId }) => {
     const dispatch = useDispatch()
     const [name, setName] = useState(projectName)
-    
+
     const [description, setDescription] = useState(projectDescr)
     const updateDescription = (e) => setDescription(e.target.value)
-    
+
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(projectEmployeeId)
     const selectedEmployee = (e) => setSelectedEmployeeId(e.target.value)
-    
+
     const employees = useSelector(state => state.employees)
     const employeesArray = Object.values(employees)
     const roleId = useSelector(state => state.session.role)
-    
+
     //find the current employee name to populate the name field for users that don't have access to employees for the dropdown in edit projects (submitter and dev)
     const projectsObj = useSelector(state => state.projects)
 
-    // only assign currentEmployeeId if projectId is passed in props to avoid undefined in employee dropdown
-    let currentEmployeeNameId
-    if(projectId) currentEmployeeNameId = projectsObj[projectId].Employees[0].id
-    
+    // only assign currentEmployeeName if projectId is passed in props to avoid undefined in employee dropdown (for other roles but admin)
+    let currentEmployeeName
+    if (projectId) currentEmployeeName = projectsObj[projectId].Employees[0].name
+
+    // only assign currentEmployeeid if projectId is passed in props to avoid undefined in employee dropdown (for admin role)
+    let currentEmployeeId
+    if (projectId) currentEmployeeId = projectsObj[projectId].Employees[0].id
+
 
     //handle submit 
     const editProject = (e) => {
@@ -50,14 +54,14 @@ const EditProjectPopup = ({ hideEditProjectPopup, projectName, projectDescr, pro
             <div className="edit-overlay">
                 <div className='popup'>
                     <div className='component__topbar component__topbar--blue'><h3>Edit Project</h3></div>
-                    <form onSubmit={editProject} className='popup__form'>
-                        <mui.Button variant='contained' onClick={close} className='edit-project-close'>exit</mui.Button>
+                    <mui.Button variant='contained' onClick={close} className='edit-proj-close-button'>exit</mui.Button>
+                    <form onSubmit={editProject} className='edit-proj-popup-form'>
 
                         <mui.TextField disabled id="standard-required" label='Name' defaultValue={name} />
                         <mui.TextField onChange={updateDescription} rowsMax={4} label='description' id='standard-multiline-flexible' value={description} multiline required />
 
                         <mui.InputLabel id="demo-simple-select-label">Add/Edit Employee</mui.InputLabel>
-                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={currentEmployeeNameId ? currentEmployeeNameId : ''} value={selectedEmployeeId}>
+                        <mui.Select labelId='demo-simple-select-label' onChange={selectedEmployee} id='employee' defaultValue={currentEmployeeId ? currentEmployeeId : ''} value={selectedEmployeeId}>
                             <mui.MenuItem value='' key={-1}>Select Employee</mui.MenuItem>
                             {/* must hard code in demo employees since they aren't returned from db to protect them from being deleted by an admin */}
                             <mui.MenuItem key={1} value={1}>demo_user_admin</mui.MenuItem>
@@ -83,12 +87,12 @@ const EditProjectPopup = ({ hideEditProjectPopup, projectName, projectDescr, pro
             <div className="edit-overlay">
                 <div className='popup'>
                     <div className='component__topbar component__topbar--blue'><h3>Edit Ticket</h3></div>
-                    <form className='popup__form'>
-                        <mui.Button variant='contained' onClick={close} className='edit-ticket-close'>exit</mui.Button>
+                    <mui.Button variant='contained' onClick={close} className='edit-proj-close-button'>exit</mui.Button>
+                    <form className='vedit-proj-popup-form'>
 
                         <mui.TextField disabled id="standard-required" label='Name' defaultValue={name} />
                         <mui.TextField rowsMax={4} disabled label='Description' id='standard-multiline-flexible' value={description} multiline />
-                        <mui.TextField disabled id="standard-required" label='Employee' value={currentEmployeeNameId} />
+                        <mui.TextField disabled id="standard-required" label='Employee' value={currentEmployeeName} />
                     </form>
                 </div>
             </div>

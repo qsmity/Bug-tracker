@@ -174,60 +174,79 @@ router.put('/:projectId',
     requireAuth,
     asyncHandler(async (req, res, next) => {
 
-        const projectId = parseInt(req.params.projectId)
+        try {
+            const projectId = parseInt(req.params.projectId)
 
-        const role = req.user.role
-        const permissionAdmin = ac.can(`${role}`).updateAny('projects')
+            const role = req.user.role
+            const permissionAdmin = ac.can(`${role}`).updateAny('projects')
 
-        //grab employee id's from employeeIdArray sent to associate employee with project created
-        const { name, description, employeeIdArray } = req.body
+            //grab employee id's from employeeIdArray sent to associate employee with project created
+            const { name, description, employeeIdArray } = req.body
 
-        //find project in db to update
-        let project = await Project.findOne({
-            where: {
-                id: projectId
-            }
-        });
-
-        if (permissionAdmin.granted) {
-            if (!employeeIdArray) {
-                //update proj in db
-                project.update({ name, description })
-            } else {
-                project.update({ name, description })
-
-                //map over array to add association for each employee
-                employeeIdArray.map(async id => {
-                    //find employee in db
-                    const employee = await Employee.findByPk(id)
-                    //update association
-                    project.addEmployee(employee)
-                })
-            }
-
-            project = await Project.findOne({
-                include: [Employee],
+            //find project in db to update
+            let project = await Project.findOne({
                 where: {
                     id: projectId
+                },
+                include: [Employee]
+            });
+            if (permissionAdmin.granted) {
+                if (!employeeIdArray) {
+                    //update proj in db
+                    await project.update({ name, description })
+                    // await Project.update({ name, description }, {
+                    //     include: [Employee],
+                    //     where: {
+                    //         id: projectId
+                    //     }
+                    // })
+                } else {
+                    
+                    //not updating project id because ticket is created for one specific proj
+                    // await Project.update({ name, description }, {
+                        //     include: [Employee],
+                        //     where: {
+                            //         id: projectId
+                            //     }
+                            // })
+                            await project.update({ name, description })
+                            
+                            //map over array to add association for each employee
+                            employeeIdArray.map(async id => {
+                                //find employee in db
+                                const employee = await Employee.findByPk(id)
+                                //update association
+                                await project.addEmployee(employee)
+                            })
                 }
-            })
-            
-            res.status(201)
-            res.json({ project })
 
-        } else {
-            const err = new Error('permission denied')
-            err.title = 'permission denied'
-            err.status = 401
-            err.errors = ['role not permitted to create resource']
-            next(err)
+                // project = await Project.findOne({
+                //     include: [Employee],
+                //     where: {
+                //         id: projectId
+                //     }
+                // })
+                console.log('back end project', project)
+                res.status(201)
+                res.json({ project })
+
+            } else {
+                const err = new Error('permission denied')
+                err.title = 'permission denied'
+                err.status = 401
+                err.errors = ['role not permitted to create resource']
+                next(err)
+            }
+        } catch (e) {
+
         }
+
 
 
 
     }))
 
-    //delete project in db (admin only)
+//delete project in db (admin only)
 router.delete('/:projectId', requireAuth, asyncHandler(async (req, res, next) => {
     //employeeId will be sent when the admin clicks on the user to update the role with
     const projectId = parseInt(req.params.projectId, 10)

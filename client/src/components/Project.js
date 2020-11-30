@@ -64,7 +64,7 @@ const Project = ({ disabled }) => {
                         projectEmployeeId={projectEmployeeId}
                         hideEditProjectPopup={hideEditProjectPopup} /> : null}
 
-                <ProjectTable disabled={disabled} projectsArray={projectsArray} hideEditProjectPopup={hideEditProjectPopup} />
+                <ProjectTable disabled={disabled} projectsArray={projectsArray} projects={projects} hideEditProjectPopup={hideEditProjectPopup} />
             </div>
         )
     } else {

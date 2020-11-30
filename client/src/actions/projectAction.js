@@ -11,15 +11,20 @@ const loadProjects = (projects) => ({
     projects
 })
 
+// important *** commented out add project and update project because I can't seem to get the associations to 
+// employees to be return when the project is updated, so the store isn't updating, and return the table not 
+//rerendindering witht he updated resuls. The work around is to just call getProjects() again which grabs all projects
+//and may be slow if the db size gets larger. Right now it works
+
 // const addProject = (project) => ({
 //     type: ADD_PROJECT,
 //     project
 // })
 
-export const updateProject = (project) => ({
-    type: UPDATE_PROJECT,
-    project
-})
+// export const updateProject = (project) => ({
+//     type: UPDATE_PROJECT,
+//     project
+// })
 
 export const removeOneProject = (projectId) => ({
     type: REMOVE_ONE_PROJECT,
@@ -38,12 +43,12 @@ export const getProjects = () => async (dispatch) => {
     try {
         const res = await fetch('/api/projects')
 
-        
+
         const { projects } = await res.json()
-        if(projects){
+        if (projects) {
             dispatch(loadProjects(projects))
         }
-        return 
+        return
     } catch (err) {
         console.log(err)
         //enventually will push into errors array in store
@@ -69,12 +74,14 @@ export const createProject = (name, description, employeeId) => async (dispatch)
             body: JSON.stringify(body)
         })
 
-        if(!res.ok){
+        if (!res.ok) {
             throw res
         }
 
         const { project } = await res.json()
         console.log('inside getprojects thunks', project)
+        // dispatch(AddProject(project))
+        //temporary fix read note above
         dispatch(getProjects())
     } catch (err) {
         console.log(err)
@@ -108,7 +115,9 @@ export const editProject = (name, description, employeeId, projectId) => async (
         }
         const { project } = await res.json()
         console.log('in proj reducer', project)
-        dispatch(updateProject(project))
+        // dispatch(updateProject(project))
+        //temporary fix read note above
+        dispatch(getProjects())
     } catch (err) {
         console.log(err)
         //enventually will push into errors array in store

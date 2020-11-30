@@ -36,19 +36,6 @@ const AddTicketPopup = ({ hideAddTicketPopup, projectsArray }) => {
     const [selectedProjectId, setSelectedProjectId] = useState('')
     const updateSelectedProject = (e) => setSelectedProjectId(e.target.value)
 
-
-    // const roleId = useSelector(state => state.session.role)
-
-    //subscribe to the employee slice of state for the drop down
-    // const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
-    // const employees = useSelector(state => state.employees)
-    // const employeesArray = Object.values(employees)
-    // const updateSelectedEmployee = (e) => setSelectedEmployeeId(e.target.value)
-
-
-
-
-
     // handle submit 
     const addTicket = (e) => {
         e.preventDefault()
@@ -60,13 +47,6 @@ const AddTicketPopup = ({ hideAddTicketPopup, projectsArray }) => {
     const close = (e) => {
         hideAddTicketPopup()
     }
-
-    //re-render when new ticket added or edited
-    //is a workaround for employees not being returned properly when queried after project created
-    //add project is dispatching getAllProducts action when it should be dispatching add on project
-    // useEffect(() => {
-
-    // }, [projects])
 
     return (
         <div className="edit-overlay">
