@@ -16,7 +16,6 @@
 - Sequelize 
 - PostgreSQL
 - React/Redux
-- Amazon product review API
 - Heroku
 
 ## Notable Packages 
@@ -111,9 +110,9 @@ Submitters only have the ability to add a new ticket with an associated project.
 
 
 ### Role Based Access Control
-Role based access control was a fun puzzle to solve. I thought about potentialy creating middlewares to to verify the role of the user, but found that incorporating the rbac npm package was the perfect fit for this project. All resource management based on role access is done in the Back End, but the Front End does have a bit of conditional logic to disable buttons and hide things from view based on the role. Even if a bad actor were to make those features visible, the still would not have access to sensitive information handled in the Back End. 
+Role based access control was a fun puzzle to solve. I thought about potentialy creating middlewares to verify the role of the user, but found that incorporating the rbac npm package was the perfect fit for this project. All resource management based on role access is done in the Back End, but the Front End does have a bit of conditional logic to disable buttons and hide things from view based on the role. Even if a bad actor were to make those features visible, they still would not have access to sensitive information handled in the Back End. 
 
-The role of the user is added to the JWT token that is created when the user logs in or signs up. Once the user is found in the database, the `role` from the `Employee` table (as the `user` in this `getUserToken` function paramter) is added to the `userDataForToken` object. This insures that the role is sent with every request, which is integral to verify permissions.  
+The role of the user is added to the JWT token that is created when the user logs in or signs up. Once the user is found in the database, the `role` from the `Employee` table (as the `user` in this `getUserToken` function paramter) is added to the `userDataForToken` object. This ensures that the role is sent with every request, which is integral to verify permissions.  
 
 ```js
 // auth.js file
