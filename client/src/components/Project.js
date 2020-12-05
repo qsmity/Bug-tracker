@@ -15,11 +15,11 @@ const Project = ({ disabled }) => {
     const [isAddProjectHidden, setIsAddProjectHidden] = useState(true)
     const [isEditProjectHidden, setIsEditProjectHidden] = useState(true)
 
-     //grab project name and description for edit button popup
-     const [projectName, setProjectName] = useState('')
-     const [projectDescr, setProjectDescr] = useState('')
-     const [projectId, setProjectId] = useState('')
-     const [projectEmployeeId, setProjectEmployeeId] = useState('')
+    //grab project name and description for edit button popup
+    const [projectName, setProjectName] = useState('')
+    const [projectDescr, setProjectDescr] = useState('')
+    const [projectId, setProjectId] = useState('')
+    const [projectEmployeeId, setProjectEmployeeId] = useState('')
 
 
     useEffect(() => {
@@ -49,27 +49,25 @@ const Project = ({ disabled }) => {
         }
     }
 
-    if (projectsArray.length > 0) {
-        return (
-            <div>
-                <mui.Button variant='contained' disabled={disabled} onClick={hideAddProjectPopup}>add project</mui.Button>
+    return (
+        <div>
+            <mui.Button variant='contained' disabled={disabled} onClick={hideAddProjectPopup}>add project</mui.Button>
 
-                { !isAddProjectHidden ? <AddProjectPopup hideAddProjectPopup={hideAddProjectPopup} /> : null}
+            { !isAddProjectHidden ? <AddProjectPopup hideAddProjectPopup={hideAddProjectPopup} /> : null}
 
-                { !isEditProjectHidden ?
-                    <EditProjectPopup
-                        projectId={projectId}
-                        projectName={projectName}
-                        projectDescr={projectDescr}
-                        projectEmployeeId={projectEmployeeId}
-                        hideEditProjectPopup={hideEditProjectPopup} /> : null}
-
+            { !isEditProjectHidden ?
+                <EditProjectPopup
+                    projectId={projectId}
+                    projectName={projectName}
+                    projectDescr={projectDescr}
+                    projectEmployeeId={projectEmployeeId}
+                    hideEditProjectPopup={hideEditProjectPopup} /> : null}
+            {projectsArray.length > 0 ?
                 <ProjectTable disabled={disabled} projectsArray={projectsArray} projects={projects} hideEditProjectPopup={hideEditProjectPopup} />
-            </div>
-        )
-    } else {
-        return <h1 className='not-found'>No Projects Found</h1>
-    }
-}
+                : <h1 className='not-found'>No Projects Found</h1>
 
+            }
+        </div>
+    )
+}
 export default Project; 

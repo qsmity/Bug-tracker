@@ -40,7 +40,7 @@ const EditTicketPopup = ({ hideEditTicketPopup, ticketName, ticketDescr, ticketI
         hideEditTicketPopup()
     }
 
-    //handle close click
+    //handle close click 
     const close = (e) => {
         hideEditTicketPopup()
     }

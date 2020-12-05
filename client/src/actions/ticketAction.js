@@ -108,6 +108,7 @@ export const editTicket = (name, description, severityLevel, status, type, emplo
             throw res
         }
         const { ticket } = await res.json()
+        console.log(ticket)
         dispatch(updateTicket(ticket))
     } catch (err) {
         console.log(err)

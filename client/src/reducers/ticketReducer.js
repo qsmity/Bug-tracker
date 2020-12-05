@@ -12,7 +12,9 @@ const ticketReducer = (state = {}, action) => {
         case LOAD_TICKETS:
             action.tickets.map(ticket => {
                 //convert employee object to just the name to make state shape easier to update
-                ticket.Employee = ticket.Employee.name
+                if(ticket.Employee){
+                    ticket.Employee = ticket.Employee.name
+                }
                 return nextState[ticket.id] = ticket
             })
             return nextState

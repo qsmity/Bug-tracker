@@ -58,7 +58,6 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
         dispatch(getTickets())
     }, [dispatch])
 
-    if (ticketsArray.length > 0) {
         return (
             <div className='ticket'>
                 <div>
@@ -68,7 +67,12 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
                         :
                         <mui.Button variant='contained' disabled={disabled} type='click'>Add Ticket</mui.Button>
                     }
-                    <TicketTable hideEditTicketPopup={hideEditTicketPopup} disabled={disabled} ticketsArray={ticketsArray} />
+                    {
+                        ticketsArray.length > 0 ? 
+                        <TicketTable hideEditTicketPopup={hideEditTicketPopup} disabled={disabled} ticketsArray={ticketsArray} />
+                        : <h1 className='not-found'>No Tickets Found</h1>
+                    }
+                   
                 </div>
 
                 { !isEditTicketHidden ? <EditTicketPopup
@@ -83,9 +87,6 @@ const Ticket = ({ disabled, currentEmployeeRole }) => {
                 { !isAddTicketHidden ? <AddTicketPopup projectsArray={projectsArray} hideAddTicketPopup={hideAddTicketPopup} /> : null}
             </div>
         )
-    } else {
-        return <h1 className='not-found'>No Tickets Available</h1>
-    }
 
 }
 
