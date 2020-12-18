@@ -269,8 +269,8 @@ The role that is extracted from the token is interpolated in `ac.can()`. A condi
 
 ### Todo 
 ***
-- [ ] filtering for tables
-- [ ] pagination for tables to replace scrolling
-- [ ] ability to add comments on tickets
-- [ ] add multiple employees in select field of projects. Back End functionality already set up to accept multiple employees
-- [ ] dark mode theme
+- [ ] Filtering for tables
+- [ ] Pagination for tables to replace scrolling
+- [ ] Ability to add comments on tickets
+- [ ] Add multiple employees in select field of projects. Back End functionality already set up to accept multiple employees
+- [ ] Dark mode theme
